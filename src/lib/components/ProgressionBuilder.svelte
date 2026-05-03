@@ -68,8 +68,10 @@
 	@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
 	.prog-section {
-		margin-top: 20px; padding-top: 14px;
+		position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+		background: #0f0d0b;
 		border-top: 1px solid #2a251f;
+		padding: 10px 24px;
 	}
 	.prog-row {
 		display: flex; align-items: center; gap: 12px; flex-wrap: wrap;

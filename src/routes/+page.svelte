@@ -67,8 +67,6 @@
 			</aside>
 		</div>
 
-		<ProgressionBuilder />
-
 		<footer class="footer">
 			<span>
 				{#if isAudioLoading()}
@@ -88,9 +86,11 @@
 	</div>
 </div>
 
+<ProgressionBuilder />
+
 <style>
 	.page { width: 100%; min-height: 100vh; }
-	.content { max-width: 1280px; margin: 0 auto; padding: 32px 24px; }
+	.content { max-width: 1280px; margin: 0 auto; padding: 32px 24px 96px; }
 
 	.header {
 		display: flex; align-items: baseline; justify-content: space-between;
