@@ -1,38 +1,29 @@
 import type { Quality, ModeName } from '$lib/theory/modes.js';
 import { chordPitches } from '$lib/theory/chords.js';
+import { writable } from 'svelte/store';
 
 let sampler: import('tone').Sampler | null = null;
+
+export const audioReady   = writable(false);
+export const audioLoading = writable(false);
+
 let ready = false;
 let loading = false;
 
 export function isAudioReady(): boolean { return ready; }
 export function isAudioLoading(): boolean { return loading; }
 
-// Preload audio samples on page load (avoid delay on first chord click)
+// Preload sampler buffers on page load — no user gesture needed for HTTP fetches.
+// AudioContext (Tone.start) is deferred to first user interaction in playChord.
 if (typeof window !== 'undefined') {
-	initAudio();
+	preloadSampler();
 }
 
-async function ensureContextRunning(): Promise<void> {
-	const Tone = await import('tone');
-	await Tone.start();
-	if (Tone.getContext().state !== 'running') {
-		await Tone.getContext().resume();
-	}
-}
-
-export async function initAudio(): Promise<void> {
-	if (ready) {
-		// Already loaded — just make sure the audio context is running
-		// (browsers suspend it after inactivity)
-		await ensureContextRunning();
-		return;
-	}
-	if (loading) return;
+async function preloadSampler(): Promise<void> {
+	if (loading || ready) return;
 	loading = true;
+	audioLoading.set(true);
 	const Tone = await import('tone');
-	await Tone.start();
-
 	await new Promise<void>((resolve) => {
 		sampler = new Tone.Sampler({
 			urls: {
@@ -49,10 +40,41 @@ export async function initAudio(): Promise<void> {
 			onload: () => {
 				ready = true;
 				loading = false;
+				audioReady.set(true);
+				audioLoading.set(false);
 				resolve();
 			},
 		}).toDestination();
 	});
+}
+
+async function ensureContextRunning(): Promise<void> {
+	const Tone = await import('tone');
+	await Tone.start();
+	if (Tone.getContext().state !== 'running') {
+		await Tone.getContext().resume();
+	}
+}
+
+export async function initAudio(): Promise<void> {
+	// Sampler already loaded — just resume AudioContext (may be suspended after inactivity)
+	if (ready) {
+		await ensureContextRunning();
+		return;
+	}
+	// Still loading in background — wait for it, then resume context
+	if (loading) {
+		await new Promise<void>((resolve) => {
+			const interval = setInterval(() => {
+				if (ready) { clearInterval(interval); resolve(); }
+			}, 50);
+		});
+		await ensureContextRunning();
+		return;
+	}
+	// Fallback: sampler not started yet (e.g. SSR or preload failed)
+	await preloadSampler();
+	await ensureContextRunning();
 }
 
 export async function playChord(

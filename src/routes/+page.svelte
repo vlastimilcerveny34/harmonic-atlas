@@ -8,7 +8,7 @@
 	import { tonicPc, modeName, diatonicSet, selectedChord, hoveredChord } from '$lib/stores/session.js';
 	import { canonicalChordLabel } from '$lib/theory/chords.js';
 	import { MODES, MODE_NAMES } from '$lib/theory/modes.js';
-	import { isAudioReady, isAudioLoading } from '$lib/audio/synth.js';
+	import { audioReady, audioLoading } from '$lib/audio/synth.js';
 
 	const NOTE_NAMES = ['C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab','A','A#/Bb','B'];
 
@@ -69,9 +69,9 @@
 
 		<footer class="footer">
 			<span>
-				{#if isAudioLoading()}
+				{#if $audioLoading}
 					◌ loading piano samples…
-				{:else if isAudioReady()}
+				{:else if $audioReady}
 					◉ audio ready
 				{:else}
 					◌ click any chord to enable audio
