@@ -1,0 +1,117 @@
+<script lang="ts">
+	import { progression, diatonicSet, tonicPc, modeName, selectedModulationPath } from '$lib/stores/session.js';
+	import { canonicalChordLabel, getRoman } from '$lib/theory/chords.js';
+	import { playChord, playProgression } from '$lib/audio/synth.js';
+	import { downloadMidi } from '$lib/audio/midi.js';
+
+	const QUALITY_COLOR: Record<string, string> = {
+		M: '#e08f9a', m: '#7aa9c9', d: '#b888c4', '7': '#d4a44a',
+	};
+
+	function exportMidi() {
+		downloadMidi($progression, 'progression.mid', 100);
+	}
+</script>
+
+<div class="prog-section">
+	<div class="prog-row">
+		<span class="prog-label">Progression</span>
+		<span class="hint">double-click any chord to add</span>
+
+		<div class="prog-strip">
+			{#if $progression.length === 0}
+				<span class="empty">Empty — start clicking chords on the circle.</span>
+			{:else}
+				{#each $progression as chord, i (chord.id)}
+					{@const roman = getRoman(chord.pc, chord.quality, $diatonicSet)}
+					<div class="prog-item" style:animation="fadeIn 0.3s ease-out">
+						<button
+							class="chord-chip"
+							style:background={QUALITY_COLOR[chord.quality]}
+							onclick={() => playChord(chord.pc, chord.quality, $tonicPc, $modeName)}
+						>
+							<span class="chip-name">{canonicalChordLabel(chord.pc, chord.quality)}</span>
+							{#if roman}<span class="chip-roman">{roman}</span>{/if}
+						</button>
+						{#if i < $progression.length - 1}
+							<span class="arrow">→</span>
+						{/if}
+					</div>
+				{/each}
+			{/if}
+		</div>
+
+		<div class="prog-actions">
+			<button
+				class="btn-play"
+				disabled={$progression.length === 0}
+				style:background={$progression.length ? '#d4a574' : '#3a342f'}
+				style:color={$progression.length ? '#1a1612' : '#7a736a'}
+				onclick={() => playProgression($progression, $tonicPc, $modeName)}
+			>▶ PLAY</button>
+			<button
+				class="btn-export"
+				disabled={$progression.length === 0}
+				onclick={exportMidi}
+				title="Export progression as MIDI file"
+			>↓ MIDI</button>
+			<button
+				class="btn-clear"
+				disabled={$progression.length === 0}
+				onclick={() => { progression.set([]); selectedModulationPath.set(null); }}
+			>CLEAR</button>
+		</div>
+	</div>
+</div>
+
+<style>
+	@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+	.prog-section {
+		margin-top: 20px; padding-top: 14px;
+		border-top: 1px solid #2a251f;
+	}
+	.prog-row {
+		display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+	}
+	.prog-label {
+		font-family: 'Crimson Pro', serif; font-size: 1.1rem;
+		color: #f4ead7; font-weight: 500;
+	}
+	.hint {
+		font-size: 0.7rem; color: #7a736a; font-family: 'Outfit', sans-serif;
+		text-transform: uppercase; letter-spacing: 0.1em;
+	}
+	.prog-strip {
+		flex: 1 1 auto; min-width: 240px;
+		display: flex; flex-wrap: wrap; gap: 6px;
+		padding: 6px 10px; min-height: 40px;
+		border-radius: 4px; background: #13100e; border: 1px solid #2a251f;
+		align-items: center;
+	}
+	.empty { color: #5c5650; font-style: italic; font-family: 'Crimson Pro', serif; font-size: 0.85rem; }
+	.prog-item { display: flex; align-items: center; gap: 4px; }
+	.chord-chip {
+		background: transparent; border: none; cursor: pointer;
+		display: flex; flex-direction: column; align-items: center;
+		padding: 4px 10px; border-radius: 3px; min-width: 44px;
+		transition: filter 0.15s;
+	}
+	.chord-chip:hover { filter: brightness(1.15); }
+	.chip-name { font-weight: 500; font-size: 0.9rem; color: #1a1612; }
+	.chip-roman { font-size: 0.6rem; opacity: 0.7; font-family: 'Crimson Pro', serif; font-style: italic; color: #1a1612; }
+	.arrow { color: #5c5650; font-size: 0.75rem; }
+
+	.prog-actions { display: flex; gap: 6px; }
+	.btn-play, .btn-export, .btn-clear {
+		border: 1px solid #3a342f; padding: 5px 12px; border-radius: 3px;
+		font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer;
+		font-family: 'Outfit', sans-serif;
+	}
+	.btn-play { border: none; font-weight: 500; }
+	.btn-export { background: transparent; color: #d4a574; }
+	.btn-export:hover:not(:disabled) { background: #2a221a; }
+	.btn-clear { background: transparent; color: #9b948a; }
+	.btn-clear:hover:not(:disabled) { background: #1a1612; }
+	.btn-play:disabled, .btn-export:disabled, .btn-clear:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
