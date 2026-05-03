@@ -24,7 +24,7 @@
 		<header class="header">
 			<div>
 				<h1 class="title">
-					Harmonic Atlas
+					Harmony Mapper
 					<span class="version">v1.0 · beta</span>
 				</h1>
 				<p class="subtitle">Click any chord to see where it can lead</p>
