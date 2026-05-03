@@ -8,6 +8,11 @@ let loading = false;
 export function isAudioReady(): boolean { return ready; }
 export function isAudioLoading(): boolean { return loading; }
 
+// Preload audio samples on page load (avoid delay on first chord click)
+if (typeof window !== 'undefined') {
+	initAudio();
+}
+
 async function ensureContextRunning(): Promise<void> {
 	const Tone = await import('tone');
 	await Tone.start();
