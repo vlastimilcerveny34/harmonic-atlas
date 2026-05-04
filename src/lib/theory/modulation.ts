@@ -1,6 +1,7 @@
 import { diatonicChords, canonicalChordLabel } from './chords.js';
 import { keyDistance, fifthsDistance } from './keys.js';
 import { MODES } from './modes.js';
+import { NOTE_NAMES_COMPACT } from './noteNames.js';
 import type { ModeName, Quality } from './modes.js';
 
 export type BridgeType = 'pivot' | 'secondaryDominant' | 'directDominant' | 'chromaticMediant';
@@ -52,7 +53,7 @@ export function findModulationPaths(
 				chord: { pc: fromChord.pc, quality: fromChord.quality, label: fromChord.name },
 				fromRole: fromChord.roman,
 				toRole: inTo.roman,
-				description: 'Sdílený diatonický akord — most',
+				description: 'Shared diatonic chord — bridge',
 			},
 			example: [
 				{ pc: fromI.pc, quality: fromI.quality, label: fromI.name },
@@ -71,7 +72,7 @@ export function findModulationPaths(
 			chord: { pc: v7Pc, quality: '7', label: canonicalChordLabel(v7Pc, '7') },
 			fromRole: '',
 			toRole: 'V7 → I',
-			description: 'Tonicizace cílové tóniky přes její dominantu',
+			description: 'Tonicize the target key via its dominant',
 		},
 		example: [
 			{ pc: fromI.pc, quality: fromI.quality, label: fromI.name },
@@ -88,7 +89,7 @@ export function findModulationPaths(
 				chord: { pc: v7Pc, quality: 'M', label: canonicalChordLabel(v7Pc, 'M') },
 				fromRole: '',
 				toRole: 'V → I',
-				description: 'Přímá dominanta cílové tóniky (jednodušší než V7)',
+				description: 'Direct dominant of target tonic (simpler than V7)',
 			},
 			example: [
 				{ pc: fromI.pc, quality: fromI.quality, label: fromI.name },
@@ -107,8 +108,8 @@ export function findModulationPaths(
 				type: 'chromaticMediant',
 				chord: { pc: toI.pc, quality: toI.quality, label: toI.name },
 				fromRole: '',
-				toRole: `přímá mediantní mod. (${intLabel})`,
-				description: 'Cílová tónika v chromatickém terciovém vztahu — překvapivý posun',
+				toRole: `direct mediant modulation (${intLabel})`,
+				description: 'Target tonic a chromatic third away — surprising shift',
 			},
 			example: [
 				{ pc: fromI.pc, quality: fromI.quality, label: fromI.name },
@@ -128,8 +129,6 @@ export interface MultiStepPath {
 	via: { tonicPc: number; modeName: ModeName; label: string };
 	example: BridgeChord[];
 }
-
-const NOTE_NAMES_MULTI = ['C','C#','D','Eb','E','F','F#','G','Ab','A','Bb','B'];
 
 function getBestLegExample(
 	fromTonic: number, fromMode: ModeName,
@@ -175,7 +174,7 @@ export function findMultiStepPaths(
 			via: {
 				tonicPc: midTonic,
 				modeName: midMode,
-				label: NOTE_NAMES_MULTI[midTonic] + ' ' + MODES[midMode].label,
+				label: NOTE_NAMES_COMPACT[midTonic] + ' ' + MODES[midMode].label,
 			},
 			example: combined,
 		});

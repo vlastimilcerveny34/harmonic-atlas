@@ -18,7 +18,7 @@
 
 	const preset = $derived(PRESETS.find(p => p.id === selectedId)!);
 
-	const applied = $derived(() => {
+	const appliedSteps = $derived.by(() => {
 		const steps = applyPreset(preset, $tonicPc);
 		return steps.map(s => ({
 			pc: s.pc,
@@ -29,7 +29,7 @@
 	});
 
 	function loadPreset() {
-		const steps = applied();
+		const steps = appliedSteps;
 		progression.set(steps.map(s => ({
 			pc: s.pc, quality: s.quality,
 			id: Date.now() + Math.random(),
@@ -63,12 +63,12 @@
 	>
 		<div class="preset-desc">{preset.description}</div>
 		<div class="example">
-			{#each applied() as step, i}
+			{#each appliedSteps as step, i}
 				<button
 					class="chord-chip"
 					onclick={(e) => { e.stopPropagation(); playChord(step.pc, step.quality, $tonicPc, $modeName); }}
 				>{step.label}</button>
-				{#if i < applied().length - 1}
+				{#if i < appliedSteps.length - 1}
 					<span class="example-arr">→</span>
 				{/if}
 			{/each}

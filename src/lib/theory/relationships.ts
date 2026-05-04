@@ -58,13 +58,9 @@ export function outgoingRelationships(
 	if (lenses.dominant && fromChord.quality === '7') {
 		const targetPc = (fromChord.pc + 5) % 12;
 		if (targetPc === tonicPc) {
-			const match = set.find(d => d.pc === targetPc);
-			if (match) {
-				push(targetPc, match.quality, 'dominant', `V7 → ${match.roman}`);
-			} else {
-				push(targetPc, 'M', 'dominant', 'V7 → I');
-				push(targetPc, 'm', 'dominant', 'V7 → i');
-			}
+			// Tonic is always set[0] — guaranteed to exist
+			const tonic = set[0];
+			push(targetPc, tonic.quality, 'dominant', `V7 → ${tonic.roman}`);
 		}
 	}
 

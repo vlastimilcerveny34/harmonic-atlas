@@ -49,13 +49,14 @@ export function progressionToMidi(
 	const duration = PPQ; // quarter note per chord
 	const velocity = 90;
 
-	progression.forEach((chord, i) => {
+	progression.forEach((chord) => {
 		const notes = chordMidiNotes(chord.pc, chord.quality);
-		notes.forEach((n, j) => {
-			events.push(...variableLength(j === 0 && i === 0 ? 0 : (j === 0 ? 0 : 0)));
+		// All note-ons start simultaneously (delta=0 between them)
+		notes.forEach((n) => {
+			events.push(...variableLength(0));
 			events.push(0x90, n, velocity); // note on, channel 0
 		});
-		// Note offs after `duration`
+		// First note-off comes after `duration`, rest are simultaneous (delta=0)
 		notes.forEach((n, j) => {
 			events.push(...variableLength(j === 0 ? duration : 0));
 			events.push(0x80, n, 0x40);

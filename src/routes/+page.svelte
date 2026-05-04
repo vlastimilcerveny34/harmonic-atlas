@@ -9,8 +9,10 @@
 	import { canonicalChordLabel } from '$lib/theory/chords.js';
 	import { MODES, MODE_NAMES } from '$lib/theory/modes.js';
 	import { audioReady, audioLoading } from '$lib/audio/synth.js';
+	import HelpModal from '$lib/components/HelpModal.svelte';
+	import { NOTE_NAMES_DISPLAY as NOTE_NAMES } from '$lib/theory/noteNames.js';
 
-	const NOTE_NAMES = ['C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab','A','A#/Bb','B'];
+	let showHelp = $state(false);
 
 	let circleGraph: { arrows: () => ReturnType<typeof import('$lib/theory/relationships.js').outgoingRelationships> } | undefined;
 
@@ -25,9 +27,9 @@
 			<div>
 				<h1 class="title">
 					Harmony Mapper
-					<span class="version">v1.0 · beta</span>
+					<span class="version">v1.1 · beta</span>
 				</h1>
-				<p class="subtitle">Click any chord to see where it can lead</p>
+				<p class="subtitle">Click any chord to see where it can lead &nbsp;&nbsp;&nbsp;<button class="btn-help" onclick={() => showHelp = true} title="How to use">?</button></p>
 			</div>
 			<div class="controls">
 				<label class="control-group">
@@ -82,11 +84,15 @@
 				{MODES[$modeName].label}
 				· diatonic: {$diatonicSet.map(d => canonicalChordLabel(d.pc, d.quality)).join(' — ')}
 			</span>
-		</footer>
+				<span class="footer-copy">
+					© 2026 <a href="mailto:vlastimilcerveny34@gmail.com" class="footer-link">Vlastimil Červený</a>
+				</span>
+			</footer>
 	</div>
 </div>
 
 <ProgressionBuilder />
+<HelpModal bind:open={showHelp} />
 
 <style>
 	.page { width: 100%; min-height: 100vh; }
@@ -130,6 +136,16 @@
 		display: flex; gap: 16px; flex-wrap: wrap;
 	}
 	.footer-key { color: #7a736a; }
+	.footer-copy { margin-left: auto; color: #5c5650; }
+	.footer-link { color: #7a736a; text-decoration: none; }
+	.footer-link:hover { color: #d4a574; }
+	.btn-help {
+		width: 28px; height: 28px; border-radius: 50%;
+		background: transparent; border: 1px solid #3a342f;
+		color: #9b948a; font-size: 0.85rem; cursor: pointer;
+		font-family: 'Outfit', sans-serif; line-height: 1;
+	}
+	.btn-help:hover { border-color: #d4a574; color: #d4a574; }
 
 	@media (max-width: 900px) {
 		.main-grid { grid-template-columns: 1fr; }

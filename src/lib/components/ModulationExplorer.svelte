@@ -4,8 +4,7 @@
 	import { MODES, MODE_NAMES } from '$lib/theory/modes.js';
 	import { canonicalChordLabel } from '$lib/theory/chords.js';
 	import { playChord } from '$lib/audio/synth.js';
-
-	const NOTE_NAMES = ['C','C#/Db','D','D#/Eb','E','F','F#/Gb','G','G#/Ab','A','A#/Bb','B'];
+	import { NOTE_NAMES_DISPLAY as NOTE_NAMES } from '$lib/theory/noteNames.js';
 
 	const BRIDGE_COLORS: Record<BridgeType, string> = {
 		pivot:             '#d4a574',
