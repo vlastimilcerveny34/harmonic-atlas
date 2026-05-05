@@ -1,4 +1,5 @@
 import type { Quality, ModeName } from '$lib/theory/modes.js';
+import type { ChordVariation } from '$lib/theory/extensions.js';
 import { chordPitches } from '$lib/theory/chords.js';
 import { writable, get } from 'svelte/store';
 
@@ -63,15 +64,16 @@ export async function playChord(
 	tonicPc: number,
 	mode: ModeName,
 	duration = '2n',
+	variation?: ChordVariation,
 ): Promise<void> {
 	await initAudio();
 	if (!sampler) return;
-	const pitches = chordPitches(pc, quality, tonicPc, mode, 4);
+	const pitches = chordPitches(pc, quality, tonicPc, mode, 4, variation);
 	sampler.triggerAttackRelease(pitches, duration);
 }
 
 export async function playProgression(
-	chords: { pc: number; quality: Quality }[],
+	chords: { pc: number; quality: Quality; variation?: ChordVariation }[],
 	tonicPc: number,
 	mode: ModeName,
 ): Promise<void> {
@@ -80,7 +82,7 @@ export async function playProgression(
 	const Tone = await import('tone');
 	const now = Tone.now();
 	chords.forEach((c, i) => {
-		const pitches = chordPitches(c.pc, c.quality, tonicPc, mode, 4);
+		const pitches = chordPitches(c.pc, c.quality, tonicPc, mode, 4, c.variation);
 		sampler!.triggerAttackRelease(pitches, '2n', now + i * 1.1);
 	});
 }

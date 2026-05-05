@@ -2,9 +2,10 @@
 // with chords played in sequence (one chord per beat, quarter notes).
 
 import { chordIntervals } from '$lib/theory/chords.js';
+import { variationIntervals, type ChordVariation } from '$lib/theory/extensions.js';
 import type { Quality } from '$lib/theory/modes.js';
 
-interface ChordRef { pc: number; quality: Quality; }
+interface ChordRef { pc: number; quality: Quality; variation?: ChordVariation; }
 
 const PPQ = 480; // pulses per quarter note
 
@@ -23,9 +24,10 @@ function variableLength(value: number): number[] {
 	return bytes;
 }
 
-function chordMidiNotes(pc: number, quality: Quality, baseOct = 4): number[] {
+function chordMidiNotes(pc: number, quality: Quality, baseOct = 4, variation?: ChordVariation): number[] {
 	// MIDI note number: C4 = 60. pitch class 0 (C) at octave N = 12*(N+1)
-	return chordIntervals(quality).map(iv => 12 * (baseOct + 1) + pc + iv);
+	const intervals = variation ? variationIntervals(variation) : chordIntervals(quality);
+	return intervals.map(iv => 12 * (baseOct + 1) + pc + iv);
 }
 
 export function progressionToMidi(
@@ -50,7 +52,7 @@ export function progressionToMidi(
 	const velocity = 90;
 
 	progression.forEach((chord) => {
-		const notes = chordMidiNotes(chord.pc, chord.quality);
+		const notes = chordMidiNotes(chord.pc, chord.quality, 4, chord.variation);
 		// All note-ons start simultaneously (delta=0 between them)
 		notes.forEach((n) => {
 			events.push(...variableLength(0));

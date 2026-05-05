@@ -1,6 +1,7 @@
 import { Key, Note } from '@tonaljs/tonal';
 import { MODES, romanFor } from './modes.js';
 import type { Quality, ModeName } from './modes.js';
+import { variationIntervals, variationSuffix, type ChordVariation } from './extensions.js';
 
 // Canonical note names for display — fixed, independent of tonic context.
 // Major: prefer flats for enharmonic pairs except F# (more common than Gb in practice).
@@ -83,9 +84,25 @@ export function chordIntervals(quality: Quality): number[] {
 	return [0, 4, 7];
 }
 
-export function chordPitches(pc: number, quality: Quality, tonicPc: number, modeName: ModeName, baseOct = 4): string[] {
-	const root = pcToNoteName(pc, tonicPc, modeName);
-	return chordIntervals(quality).map(i => {
+// Variation-aware label: "Cmaj7", "Asus4", "F#m7"
+export function variationLabel(pc: number, variation: ChordVariation): string {
+	const root = CANONICAL_MAJOR[pc];
+	const suffix = variationSuffix(variation);
+	// For minor variations the canonical name uses sharps (CANONICAL_MINOR), e.g. "C#m7" not "Dbm7"
+	if (variation === 'm' || variation === 'm7' || variation === 'm6' || variation === 'm9' || variation === 'madd9') {
+		return CANONICAL_MINOR[pc] + suffix;
+	}
+	return root + suffix;
+}
+
+export function chordPitches(
+	pc: number, quality: Quality,
+	tonicPc: number, modeName: ModeName,
+	baseOct = 4,
+	variation?: ChordVariation,
+): string[] {
+	const intervals = variation ? variationIntervals(variation) : chordIntervals(quality);
+	return intervals.map(i => {
 		const notePc = (pc + i) % 12;
 		const oct = baseOct + Math.floor((pc + i) / 12);
 		const noteName = pcToNoteName(notePc, tonicPc, modeName);

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { progression, diatonicSet, tonicPc, modeName, selectedModulationPath } from '$lib/stores/session.js';
-	import { canonicalChordLabel, getRoman } from '$lib/theory/chords.js';
+	import { canonicalChordLabel, getRoman, variationLabel } from '$lib/theory/chords.js';
 	import { playChord, playProgression } from '$lib/audio/synth.js';
 	import { downloadMidi } from '$lib/audio/midi.js';
+	import { autoDecorate, stripDecorations, isDecorated } from '$lib/theory/autoDecorate.js';
 
 	const QUALITY_COLOR: Record<string, string> = {
 		M: '#e08f9a', m: '#7aa9c9', d: '#b888c4', '7': '#d4a44a',
@@ -10,6 +11,12 @@
 
 	function exportMidi() {
 		downloadMidi($progression, 'progression.mid', 100);
+	}
+
+	function toggleColor() {
+		progression.update(p =>
+			isDecorated(p) ? stripDecorations(p) : autoDecorate(p)
+		);
 	}
 </script>
 
@@ -28,9 +35,9 @@
 						<button
 							class="chord-chip"
 							style:background={QUALITY_COLOR[chord.quality]}
-							onclick={() => playChord(chord.pc, chord.quality, $tonicPc, $modeName)}
+							onclick={() => playChord(chord.pc, chord.quality, $tonicPc, $modeName, '2n', chord.variation)}
 						>
-							<span class="chip-name">{canonicalChordLabel(chord.pc, chord.quality)}</span>
+							<span class="chip-name">{chord.variation ? variationLabel(chord.pc, chord.variation) : canonicalChordLabel(chord.pc, chord.quality)}</span>
 							{#if roman}<span class="chip-roman">{roman}</span>{/if}
 						</button>
 						{#if i < $progression.length - 1}
@@ -49,6 +56,13 @@
 				style:color={$progression.length ? '#1a1612' : '#7a736a'}
 				onclick={() => playProgression($progression, $tonicPc, $modeName)}
 			>▶ PLAY</button>
+			<button
+				class="btn-color"
+				disabled={$progression.length === 0}
+				onclick={toggleColor}
+				class:active={isDecorated($progression)}
+				title="Auto-decorate with extended chords (maj7, m7, etc.) for richer sound"
+			>+ COLOR</button>
 			<button
 				class="btn-export"
 				disabled={$progression.length === 0}
@@ -113,6 +127,9 @@
 	.btn-play { border: none; font-weight: 500; }
 	.btn-export { background: transparent; color: #d4a574; }
 	.btn-export:hover:not(:disabled) { background: #2a221a; }
+	.btn-color { background: transparent; color: #8eaf6e; border-color: #3a4a32; }
+	.btn-color:hover:not(:disabled) { background: #1a221a; }
+	.btn-color.active { background: #2a3a22; color: #c8dca0; border-color: #5a7a45; }
 	.btn-clear { background: transparent; color: #9b948a; }
 	.btn-clear:hover:not(:disabled) { background: #1a1612; }
 	.btn-play:disabled, .btn-export:disabled, .btn-clear:disabled { opacity: 0.4; cursor: not-allowed; }

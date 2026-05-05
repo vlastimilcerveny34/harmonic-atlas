@@ -1,6 +1,18 @@
-import { diatonicChords, isDiatonic } from './chords.js';
+import { diatonicChords, isDiatonic, type DiatonicChord } from './chords.js';
 import { MODES } from './modes.js';
 import type { Quality, ModeName } from './modes.js';
+
+// Compute roman label for a borrowed chord, with ♭/♯ prefix when its root
+// differs from the home key's chord at the same degree (e.g. ♭III, ♭VI, ♭VII).
+function borrowedRoman(chord: DiatonicChord, homeSet: DiatonicChord[]): string {
+	const home = homeSet[chord.degree];
+	if (!home) return chord.roman;
+	const diff = ((chord.pc - home.pc) % 12 + 12) % 12;
+	let prefix = '';
+	if (diff === 11) prefix = '♭';
+	else if (diff === 1) prefix = '♯';
+	return prefix + chord.roman;
+}
 
 export type RelType = 'dominant' | 'tritoneSub' | 'diatonic' | 'modalInterchange' | 'chromaticMediant' | 'secondaryDominant';
 
@@ -75,7 +87,7 @@ export function outgoingRelationships(
 	// 2. TRITONE SUBSTITUTION — dom7 ↔ dom7 a tritone (6 semitones) away
 	if (lenses.tritoneSub && fromChord.quality === '7') {
 		const subPc = (fromChord.pc + 6) % 12;
-		push(subPc, '7', 'tritoneSub', 'tritone sub');
+		push(subPc, '7', 'tritoneSub', '');
 	}
 
 	// 3. DIATONIC FUNCTIONAL MOTION
@@ -99,7 +111,7 @@ export function outgoingRelationships(
 			// Source is a home-key chord → show borrowed chords from parallel mode as targets
 			parallelSet.forEach(p => {
 				if (!isDiatonic(p.pc, p.quality, set)) {
-					push(p.pc, p.quality, 'modalInterchange', `borrowed (${MODES[parallelName].label})`);
+					push(p.pc, p.quality, 'modalInterchange', borrowedRoman(p, set));
 				}
 			});
 		}
@@ -108,7 +120,7 @@ export function outgoingRelationships(
 			// Source is a borrowed chord → show home-key chords as return paths
 			set.forEach(d => {
 				if (!parallelSet.some(p => p.pc === d.pc && p.quality === d.quality)) {
-					push(d.pc, d.quality, 'modalInterchange', `return (${MODES[modeName].label})`);
+					push(d.pc, d.quality, 'modalInterchange', `return → ${d.roman}`);
 				}
 			});
 		}
@@ -120,7 +132,7 @@ export function outgoingRelationships(
 			const pc = ((fromChord.pc + iv) % 12 + 12) % 12;
 			const dir = iv > 0 ? '↑' : '↓';
 			const interval = Math.abs(iv) === 3 ? 'm3' : 'M3';
-			push(pc, fromChord.quality, 'chromaticMediant', `chromatic mediant (${dir}${interval})`);
+			push(pc, fromChord.quality, 'chromaticMediant', `${dir}${interval}`);
 		});
 	}
 

@@ -3,7 +3,21 @@
 	import { canonicalChordLabel, isDiatonic, getRoman, chordPitches } from '$lib/theory/chords.js';
 	import { tonicPc, modeName } from '$lib/stores/session.js'; // needed for chordPitches (audio)
 	import { voiceLeading } from '$lib/theory/voiceLeading.js';
+	import { MODES, type ModeName } from '$lib/theory/modes.js';
 	import type { Relationship } from '$lib/theory/relationships.js';
+	import ChordVariations from './ChordVariations.svelte';
+
+	const MAJOR_MODES = ['ionian', 'lydian', 'mixolydian'];
+
+	function modalInterchangeHeader(home: ModeName): string {
+		const parallel = MODES[home].parallel;
+		const parallelLbl = MODES[parallel].label;
+		const homeIsMajor = MAJOR_MODES.includes(home);
+		const parallelIsMajor = MAJOR_MODES.includes(parallel);
+		if (homeIsMajor && !parallelIsMajor) return `Borrowed from parallel minor (${parallelLbl})`;
+		if (!homeIsMajor && parallelIsMajor) return `Borrowed from parallel major (${parallelLbl})`;
+		return `Borrowed from ${parallelLbl}`;
+	}
 
 	const QUALITY_COLOR: Record<string, string> = {
 		M: '#e08f9a', m: '#7aa9c9', d: '#b888c4', '7': '#d4a44a',
@@ -13,12 +27,17 @@
 	};
 	const REL_LABELS: Record<string, { color: string; label: string }> = {
 		dominant:          { color: '#d4a574', label: 'Dominant resolution' },
-		tritoneSub:        { color: '#d97a8e', label: 'Tritone substitution' },
+		tritoneSub:        { color: '#d97a8e', label: 'Tritone substitution (♭II7)' },
 		diatonic:          { color: '#7aa9c9', label: 'Diatonic motion' },
-		modalInterchange:  { color: '#8eaf6e', label: 'Modal interchange' },
-		chromaticMediant:  { color: '#b888c4', label: 'Chromatic mediant' },
-		secondaryDominant: { color: '#e8956d', label: 'Secondary dominant' },
+		modalInterchange:  { color: '#8eaf6e', label: 'Modal interchange' }, // overridden dynamically
+		chromaticMediant:  { color: '#b888c4', label: 'Chromatic mediants' },
+		secondaryDominant: { color: '#e8956d', label: 'Secondary dominants' },
 	};
+
+	function sectionLabel(type: string): string {
+		if (type === 'modalInterchange') return modalInterchangeHeader($modeName);
+		return REL_LABELS[type]?.label ?? type;
+	}
 
 	let { arrows }: { arrows: Relationship[] } = $props();
 
@@ -44,7 +63,7 @@
 </script>
 
 {#if focusChord}
-	<div class="chord-info">
+	<div class="chord-info panel">
 		<div class="header">
 			<div class="name-row">
 				<span class="chord-name" style:color={QUALITY_COLOR[focusChord.quality]}>{label}</span>
@@ -62,6 +81,8 @@
 
 		<div class="notes">{notes}</div>
 
+		<ChordVariations />
+
 		{#if arrows.length > 0}
 			<div class="outgoing-header">
 				Outgoing ({arrows.length})
@@ -76,7 +97,7 @@
 				{#each Object.entries(grouped()) as [type, list]}
 					<div class="rel-group">
 						<div class="rel-type-label" style:color={REL_LABELS[type]?.color}>
-							{REL_LABELS[type]?.label}
+							{sectionLabel(type)}
 						</div>
 						{#each list as arrow}
 							{@const vl = $showVoiceLeading
@@ -100,12 +121,14 @@
 			<p class="no-rels">No outgoing relationships under current lenses. Try enabling more lenses.</p>
 		{/if}
 	</div>
-{:else}
-	<p class="empty">Click any chord to fix it as the source. Outgoing arrows will fan out to all reachable next chords.</p>
 {/if}
 
 <style>
 	.chord-info { animation: fadeIn 0.3s ease-out; }
+	.panel {
+		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
+		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+	}
 	@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
 	.header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
@@ -138,5 +161,4 @@
 	.rel-chord { font-size: 0.85rem; color: #e8e2d5; font-weight: 500; min-width: 44px; }
 	.rel-label { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.78rem; color: #9b948a; }
 	.no-rels { font-size: 0.8rem; color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; margin-top: 8px; }
-	.empty { color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; font-size: 0.9rem; margin: 0; }
 </style>

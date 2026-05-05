@@ -3,10 +3,12 @@ import { diatonicChords } from '$lib/theory/chords.js';
 import type { ModeName } from '$lib/theory/modes.js';
 import type { Lenses } from '$lib/theory/relationships.js';
 import type { Quality } from '$lib/theory/modes.js';
+import type { ChordVariation } from '$lib/theory/extensions.js';
 
 export interface ChordRef {
 	pc: number;
 	quality: Quality;
+	variation?: ChordVariation;  // optional decoration: maj7, sus4, add9, etc.
 }
 
 export interface ProgressionChord extends ChordRef {

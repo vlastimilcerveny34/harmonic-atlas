@@ -3,7 +3,7 @@
 	import LensControls from '$lib/components/LensControls.svelte';
 	import ChordInfo from '$lib/components/ChordInfo.svelte';
 	import ProgressionBuilder from '$lib/components/ProgressionBuilder.svelte';
-	import ModulationExplorer from '$lib/components/ModulationExplorer.svelte';
+	import Bridge from '$lib/components/Bridge.svelte';
 	import PresetLibrary from '$lib/components/PresetLibrary.svelte';
 	import { tonicPc, modeName, diatonicSet, selectedChord, hoveredChord } from '$lib/stores/session.js';
 	import { canonicalChordLabel } from '$lib/theory/chords.js';
@@ -27,7 +27,7 @@
 			<div>
 				<h1 class="title">
 					Harmony Mapper
-					<span class="version">v1.1 · beta</span>
+					<span class="version">v1.2 · beta</span>
 				</h1>
 				<p class="subtitle">Click any chord to see where it can lead &nbsp;&nbsp;&nbsp;<button class="btn-help" onclick={() => showHelp = true} title="How to use">?</button></p>
 			</div>
@@ -59,11 +59,9 @@
 			<aside class="sidebar">
 				<LensControls />
 
-				<div class="panel">
-					<ChordInfo {arrows} />
-				</div>
+				<ChordInfo {arrows} />
 
-				<ModulationExplorer />
+				<Bridge />
 
 				<PresetLibrary />
 			</aside>

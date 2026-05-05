@@ -54,30 +54,51 @@
 						<li><strong>Diatonic</strong> — standard movement within the key</li>
 						<li><strong>Dominant</strong> — V7 resolving to tonic</li>
 						<li><strong>Secondary dominant</strong> — V7 of any diatonic chord</li>
-						<li><strong>Tritone sub</strong> — dominant substitution a tritone away</li>
-						<li><strong>Modal interchange</strong> — chords borrowed from the parallel mode</li>
+						<li><strong>Tritone sub</strong> — dominant substitution a tritone away (♭II7)</li>
+						<li><strong>Modal interchange</strong> — chords borrowed from the parallel mode (e.g. ♭III, ♭VI, ♭VII from parallel minor)</li>
 						<li><strong>Chromatic mediant</strong> — same-quality chords a third away</li>
 					</ul>
 				</section>
 
 				<section>
 					<h3>Tonic &amp; Mode</h3>
-					<p>Use the dropdowns in the top right to set the key and mode. The circle updates instantly — diatonic chords light up for the selected key.</p>
+					<p>Use the dropdowns in the top right to set the key and mode. The circle updates instantly — diatonic chords light up for the selected key. The mode controls which 7-chord set counts as diatonic; modulation and borrowing are computed against the parallel mode.</p>
+				</section>
+
+				<section>
+					<h3>Chord variations</h3>
+					<p>When a chord is selected, the <strong>Variations</strong> panel offers extended versions: <em>maj7, m7, 6, add9, sus4</em> and similar. Click to preview the sound, double-click to add that exact variation to the progression.</p>
 				</section>
 
 				<section>
 					<h3>Progression Builder</h3>
-					<p>Double-click chords to build a progression in the bar at the bottom. Click any chord chip to hear it, press <strong>▶ PLAY</strong> to hear the full sequence, or export it as a MIDI file.</p>
+					<p>Double-click chords to build a progression in the bar at the bottom. Click any chord chip to hear it.</p>
+					<ul>
+						<li><strong>▶ PLAY</strong> — hear the whole sequence</li>
+						<li><strong>+ COLOR</strong> — auto-decorate with extended variations (maj7/m7/9 etc.) for a richer voice leading. Click again to revert to plain triads.</li>
+						<li><strong>↓ MIDI</strong> — export the progression as a MIDI file</li>
+						<li><strong>CLEAR</strong> — empty the progression</li>
+					</ul>
 				</section>
 
 				<section>
-					<h3>Modulation Explorer</h3>
-					<p>Choose a target key to see how to modulate there — pivot chords, secondary dominants, and multi-step paths through intermediate keys. Click any path to load it into the progression builder.</p>
+					<h3>Bridge — connect keys or chords</h3>
+					<p>The Bridge panel has two modes:</p>
+					<ul>
+						<li><strong>Between keys</strong> — pick a target key, the algorithm shows pivot chords, secondary dominants, chromatic mediants and multi-step paths via intermediate keys. Pivots are also highlighted on the circle.</li>
+						<li><strong>Between chords</strong> — pick a start and end chord, the pathfinder searches the harmonic graph (using current lenses) and ranks the smoothest connections.</li>
+					</ul>
+					<p>Click any path card to load it into the progression builder. Use <strong>SEARCH</strong> to compute and <strong>CLEAR</strong> to hide results.</p>
 				</section>
 
 				<section>
 					<h3>Preset Library</h3>
-					<p>Browse common chord progressions (pop, jazz, cadences, re-harmonisations). Click a preset to preview it and load it into the progression builder.</p>
+					<p>Browse common chord progressions (pop, rock, J-pop, jazz cadences, cycles, re-harmonisations). Pick one from the dropdown to preview it and load it into the progression builder.</p>
+				</section>
+
+				<section>
+					<h3>Voice leading hint</h3>
+					<p>In the chord info panel, the small <strong>VL</strong> button toggles voice-leading data for outgoing relationships — common tones (♢) and total half-step movement (½). Lower values mean smoother chord transitions.</p>
 				</section>
 			</div>
 
