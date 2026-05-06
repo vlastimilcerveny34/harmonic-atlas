@@ -51,7 +51,7 @@ const FUNCTIONAL_MOVES_BY_MODE: Record<ModeName, Record<number, number[]>> = {
 		0: [3, 6, 4, 2, 1],    // i    → IV ♭VII v ♭III ii
 		1: [4, 6, 3, 0],       // ii   → v ♭VII IV i
 		2: [3, 6, 5, 0],       // ♭III → IV ♭VII vi° i
-		3: [0, 6, 4, 1],       // IV   → i ♭VII v ii (signature)
+		3: [0, 6, 4, 2, 1],    // IV   → i ♭VII v ♭III ii (signature; ♭III stepwise descent)
 		4: [0, 6, 3, 1],       // v    → i ♭VII IV ii (weak v, no leading tone)
 		5: [6, 0, 4],          // vi°  → ♭VII i v
 		6: [0, 3, 4],          // ♭VII → i IV v (PRIMARY cadence)
@@ -60,7 +60,7 @@ const FUNCTIONAL_MOVES_BY_MODE: Record<ModeName, Record<number, number[]>> = {
 	phrygian: {
 		0: [1, 6, 3, 2, 5],    // i    → ♭II ♭vii iv ♭III ♭VI
 		1: [0, 2, 3],          // ♭II  → i ♭III iv (Phrygian cadence)
-		2: [3, 6, 5, 0],       // ♭III → iv ♭vii ♭VI i
+		2: [3, 1, 6, 5, 0],    // ♭III → iv ♭II ♭vii ♭VI i (♭II stepwise descent — iconic Phrygian)
 		3: [2, 1, 0, 6],       // iv   → ♭III ♭II i ♭vii
 		4: [0, 5, 6],          // v°   → i ♭VI ♭vii (rare)
 		5: [6, 0, 1],          // ♭VI  → ♭vii i ♭II
@@ -93,7 +93,7 @@ const FUNCTIONAL_MOVES_BY_MODE: Record<ModeName, Record<number, number[]>> = {
 		2: [5, 6, 3, 0],       // ♭III → ♭VI ♭VII iv i
 		3: [6, 4, 0, 2],       // iv   → ♭VII v i ♭III (strong subdominant)
 		4: [0, 5, 6, 3],       // v    → i ♭VI ♭VII iv (weak in pure Aeolian)
-		5: [6, 3, 2, 1],       // ♭VI  → ♭VII iv ♭III ii°
+		5: [6, 4, 3, 2, 1],    // ♭VI  → ♭VII v iv ♭III ii° (v added: stepwise descent)
 		6: [0, 3, 5, 2],       // ♭VII → i iv ♭VI ♭III (PRIMARY modal cadence)
 	},
 	// Locrian: i° ♭II ♭iii iv ♭V ♭VI ♭vii — unstable mode, moves are exploratory
