@@ -35,6 +35,7 @@ export interface ChordPath {
 const REL_COST: Record<RelType, number> = {
 	diatonic:          1.0,
 	dominant:          1.0,
+	modalCadence:      1.0,   // characteristic move of the mode — same weight as diatonic
 	secondaryDominant: 1.5,
 	tritoneSub:        2.0,
 	modalInterchange:  2.0,
