@@ -66,7 +66,14 @@
 		handleClick(node);
 	}
 
-	const tonicSpokeIdx = $derived(FIFTHS_PCS.indexOf($tonicPc));
+	// Tonic chord position depends on tonic chord quality:
+	// minor tonics (Aeolian/Dorian/Phrygian) sit on the relative-major spoke,
+	// not on the tonic-pitch spoke. M and d tonics sit on their own pitch spoke.
+	const tonicSpokeIdx = $derived(
+		$diatonicSet[0]?.quality === 'm'
+			? FIFTHS_PCS.indexOf(($tonicPc + 3) % 12)
+			: FIFTHS_PCS.indexOf($tonicPc)
+	);
 
 	// Pivot detection: a chord that is diatonic in BOTH current key and target key
 	// Used to render a golden ring around bridge chord nodes when modulation explorer is active.
@@ -82,10 +89,15 @@
 		return set;
 	});
 
-	// Target tonic spoke index (for visual marker)
-	const targetTonicSpokeIdx = $derived(
-		$modulationTarget ? FIFTHS_PCS.indexOf($modulationTarget.tonicPc) : -1
-	);
+	// Target tonic spoke index (for visual marker) — same minor-tonic logic as tonicSpokeIdx
+	const targetTonicSpokeIdx = $derived.by(() => {
+		if (!$modulationTarget) return -1;
+		const targetTonic = $targetDiatonicSet?.[0];
+		const targetPc = $modulationTarget.tonicPc;
+		return targetTonic?.quality === 'm'
+			? FIFTHS_PCS.indexOf((targetPc + 3) % 12)
+			: FIFTHS_PCS.indexOf(targetPc);
+	});
 
 	// Selected modulation path: map each step to its step index (1-based) keyed by "pc-quality"
 	const pathStepMap = $derived(() => {
