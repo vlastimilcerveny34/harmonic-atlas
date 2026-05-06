@@ -27,7 +27,7 @@
 			<div>
 				<h1 class="title">
 					Harmony Mapper
-					<span class="version">v1.2 · beta</span>
+					<span class="version">v1.3 · beta</span>
 				</h1>
 				<p class="subtitle">Click any chord to see where it can lead &nbsp;&nbsp;&nbsp;<button class="btn-help" onclick={() => showHelp = true} title="How to use">?</button></p>
 			</div>

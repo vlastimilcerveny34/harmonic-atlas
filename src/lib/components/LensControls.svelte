@@ -8,15 +8,17 @@
 		modalInterchange:  '#8eaf6e',
 		chromaticMediant:  '#b888c4',
 		secondaryDominant: '#e8956d',
+		modalCadence:      '#c4a04a',
 	};
 
 	const LENS_DEFS = [
-		{ key: 'diatonic',          label: 'Diatonic motion',         desc: 'Functional moves within the key' },
+		{ key: 'diatonic',          label: 'Diatonic motion',         desc: 'Functional moves within the key (mode-aware)' },
 		{ key: 'dominant',          label: 'Dominant resolution',     desc: 'V7 → I (and V → i)' },
 		{ key: 'secondaryDominant', label: 'Secondary dominants',     desc: 'V7/ii, V7/iii, V7/IV… → diatonic chord' },
 		{ key: 'tritoneSub',        label: 'Tritone substitution',    desc: 'Dom7 ↔ dom7 a tritone away' },
 		{ key: 'modalInterchange',  label: 'Modal interchange',       desc: 'Borrowed from parallel mode' },
 		{ key: 'chromaticMediant',  label: 'Chromatic mediant',       desc: 'Same-quality chords ±M3/±m3' },
+		{ key: 'modalCadence',      label: 'Modal cadence',           desc: 'Defining cadence of current mode (e.g. ♭VII→I in Mixolydian)' },
 	] as const;
 </script>
 

@@ -14,7 +14,7 @@ function borrowedRoman(chord: DiatonicChord, homeSet: DiatonicChord[]): string {
 	return prefix + chord.roman;
 }
 
-export type RelType = 'dominant' | 'tritoneSub' | 'diatonic' | 'modalInterchange' | 'chromaticMediant' | 'secondaryDominant';
+export type RelType = 'dominant' | 'tritoneSub' | 'diatonic' | 'modalInterchange' | 'chromaticMediant' | 'secondaryDominant' | 'modalCadence';
 
 export interface Relationship {
 	from: { pc: number; quality: Quality };
@@ -30,19 +30,94 @@ export interface Lenses {
 	modalInterchange:  boolean;
 	chromaticMediant:  boolean;
 	secondaryDominant: boolean;
+	modalCadence:      boolean;
 }
 
-// Functional moves within diatonic set (degree → target degrees).
-// Ionian-centric — accurate for Ionian/Aeolian, approximate for other modes.
-// Ordered roughly by strength/frequency of use.
-const FUNCTIONAL_MOVES: Record<number, number[]> = {
-	0: [1, 3, 4, 5, 2],    // I   → ii IV V vi iii
-	1: [4, 5, 3, 6],       // ii  → V vi IV vii°
-	2: [5, 3, 0],          // iii → vi IV I
-	3: [4, 1, 0, 5, 2],    // IV  → V ii I vi iii
-	4: [0, 5, 1],          // V   → I vi ii (deceptive)
-	5: [1, 3, 4, 0, 2],    // vi  → ii IV V I iii
-	6: [0, 4],             // vii°→ I V
+// Per-mode functional moves (degree → target degrees), ordered by strength/frequency.
+// Each mode has its own logic — Ionian's V→I doesn't apply to Mixolydian (where v is minor).
+const FUNCTIONAL_MOVES_BY_MODE: Record<ModeName, Record<number, number[]>> = {
+	// Ionian: I ii iii IV V vi vii° — classic functional harmony
+	ionian: {
+		0: [1, 3, 4, 5, 2],    // I    → ii IV V vi iii
+		1: [4, 5, 3, 6],       // ii   → V vi IV vii°
+		2: [5, 3, 0],          // iii  → vi IV I
+		3: [4, 1, 0, 5, 2],    // IV   → V ii I vi iii
+		4: [0, 5, 1, 3],       // V    → I vi ii (deceptive) IV (rock retrograde)
+		5: [1, 3, 4, 0, 2],    // vi   → ii IV V I iii
+		6: [0, 4],             // vii° → I V
+	},
+	// Dorian: i ii ♭III IV v vi° ♭VII — IV is the signature, ♭VII→i is the modal cadence
+	dorian: {
+		0: [3, 6, 4, 2, 1],    // i    → IV ♭VII v ♭III ii
+		1: [4, 6, 3, 0],       // ii   → v ♭VII IV i
+		2: [3, 6, 5, 0],       // ♭III → IV ♭VII vi° i
+		3: [0, 6, 4, 1],       // IV   → i ♭VII v ii (signature)
+		4: [0, 6, 3, 1],       // v    → i ♭VII IV ii (weak v, no leading tone)
+		5: [6, 0, 4],          // vi°  → ♭VII i v
+		6: [0, 3, 4],          // ♭VII → i IV v (PRIMARY cadence)
+	},
+	// Phrygian: i ♭II ♭III iv v° ♭VI ♭vii — ♭II→i is the iconic Phrygian cadence
+	phrygian: {
+		0: [1, 6, 3, 2, 5],    // i    → ♭II ♭vii iv ♭III ♭VI
+		1: [0, 2, 3],          // ♭II  → i ♭III iv (Phrygian cadence)
+		2: [3, 6, 5, 0],       // ♭III → iv ♭vii ♭VI i
+		3: [2, 1, 0, 6],       // iv   → ♭III ♭II i ♭vii
+		4: [0, 5, 6],          // v°   → i ♭VI ♭vii (rare)
+		5: [6, 0, 1],          // ♭VI  → ♭vii i ♭II
+		6: [0, 2, 5],          // ♭vii → i ♭III ♭VI
+	},
+	// Lydian: I II iii ♯iv° V vi vii — II is the Lydian signature, V→I still works
+	lydian: {
+		0: [1, 4, 5, 2, 6],    // I    → II V vi iii vii (II is signature)
+		1: [4, 0, 2],          // II   → V I iii (acts like V/V)
+		2: [5, 1, 0],          // iii  → vi II I
+		3: [4, 0],             // ♯iv° → V I
+		4: [0, 5, 1, 2],       // V    → I vi II iii
+		5: [1, 4, 0, 2],       // vi   → II V I iii
+		6: [0, 2, 5],          // vii  → I iii vi (subtonic)
+	},
+	// Mixolydian: I ii iii° IV v vi ♭VII — ♭VII→I is primary (no leading tone)
+	mixolydian: {
+		0: [6, 3, 4, 5, 1],    // I    → ♭VII IV v vi ii (♭VII first as signature)
+		1: [4, 6, 3, 0],       // ii   → v ♭VII IV I
+		2: [3, 6],             // iii° → IV ♭VII (rare)
+		3: [0, 6, 4, 1],       // IV   → I ♭VII v ii (strong cadential)
+		4: [3, 6, 0, 1],       // v    → IV ♭VII I ii (v→I weak)
+		5: [1, 3, 6, 0],       // vi   → ii IV ♭VII I
+		6: [0, 3, 4],          // ♭VII → I IV v (PRIMARY cadence)
+	},
+	// Aeolian: i ii° ♭III iv v ♭VI ♭VII — ♭VII→i and iv→i carry the modal weight
+	aeolian: {
+		0: [3, 6, 5, 4, 2, 1], // i    → iv ♭VII ♭VI v ♭III ii°
+		1: [4, 0],             // ii°  → v i (rare)
+		2: [5, 6, 3, 0],       // ♭III → ♭VI ♭VII iv i
+		3: [6, 4, 0, 2],       // iv   → ♭VII v i ♭III (strong subdominant)
+		4: [0, 5, 6, 3],       // v    → i ♭VI ♭VII iv (weak in pure Aeolian)
+		5: [6, 3, 2, 1],       // ♭VI  → ♭VII iv ♭III ii°
+		6: [0, 3, 5, 2],       // ♭VII → i iv ♭VI ♭III (PRIMARY modal cadence)
+	},
+	// Locrian: i° ♭II ♭iii iv ♭V ♭VI ♭vii — unstable mode, moves are exploratory
+	locrian: {
+		0: [1, 5, 6, 3, 2],    // i°   → ♭II ♭VI ♭vii iv ♭iii
+		1: [0, 2, 3],          // ♭II  → i° ♭iii iv
+		2: [3, 5, 0],          // ♭iii → iv ♭VI i°
+		3: [4, 2, 0],          // iv   → ♭V ♭iii i°
+		4: [3, 5, 0],          // ♭V   → iv ♭VI i°
+		5: [6, 1, 0],          // ♭VI  → ♭vii ♭II i°
+		6: [0, 2],             // ♭vii → i° ♭iii
+	},
+};
+
+// Characteristic cadence(s) of each mode — the moves that DEFINE the mode's sound.
+// Pairs of [fromDegree, toDegree]. Highlighted as a separate arrow type.
+const MODAL_CADENCES: Record<ModeName, Array<[number, number]>> = {
+	ionian:     [[4, 0]],            // V → I (authentic)
+	dorian:     [[6, 0], [3, 0]],    // ♭VII → i, IV → i
+	phrygian:   [[1, 0]],            // ♭II → i (Phrygian cadence)
+	lydian:     [[1, 0]],            // II → I (Lydian)
+	mixolydian: [[6, 0], [3, 0]],    // ♭VII → I, IV → I
+	aeolian:    [[6, 0], [3, 0]],    // ♭VII → i, iv → i
+	locrian:    [[1, 0]],            // ♭II → i°
 };
 
 export function outgoingRelationships(
@@ -90,11 +165,12 @@ export function outgoingRelationships(
 		push(subPc, '7', 'tritoneSub', '');
 	}
 
-	// 3. DIATONIC FUNCTIONAL MOTION
+	// 3. DIATONIC FUNCTIONAL MOTION (mode-aware)
 	if (lenses.diatonic && fromIsDiatonic) {
 		const fd = set.findIndex(d => d.pc === fromChord.pc && d.quality === fromChord.quality);
 		if (fd >= 0) {
-			(FUNCTIONAL_MOVES[fd] ?? []).forEach(td => {
+			const moves = FUNCTIONAL_MOVES_BY_MODE[modeName] ?? FUNCTIONAL_MOVES_BY_MODE.ionian;
+			(moves[fd] ?? []).forEach(td => {
 				const t = set[td];
 				if (t) push(t.pc, t.quality, 'diatonic', `${set[fd].roman} → ${t.roman}`);
 			});
@@ -148,8 +224,6 @@ export function outgoingRelationships(
 				if (target.quality === 'd') return; // no V7/vii°
 				const v7Pc = (target.pc + 7) % 12;
 				if (v7Pc === fromChord.pc && fromChord.quality === '7') return; // chord is itself the sec.dom.
-				// Skip V7→I when dominant lens is on (primary dominant handles it)
-				if (target.pc === tonicPc && lenses.dominant) return;
 				push(v7Pc, '7', 'secondaryDominant', `V7/${target.roman}`);
 			});
 		}
@@ -160,6 +234,19 @@ export function outgoingRelationships(
 			if (target && target.quality !== 'd' && targetPc !== tonicPc) {
 				push(targetPc, target.quality, 'secondaryDominant', `V7/${target.roman} → ${target.name}`);
 			}
+		}
+	}
+
+	// 7. MODAL CADENCE — characteristic cadential motion of the current mode.
+	// Highlights what makes each mode sound like itself (e.g. ♭VII→I in Mixolydian).
+	if (lenses.modalCadence && fromIsDiatonic) {
+		const fd = set.findIndex(d => d.pc === fromChord.pc && d.quality === fromChord.quality);
+		if (fd >= 0) {
+			(MODAL_CADENCES[modeName] ?? []).forEach(([fromDeg, toDeg]) => {
+				if (fd !== fromDeg) return;
+				const t = set[toDeg];
+				if (t) push(t.pc, t.quality, 'modalCadence', `${set[fd].roman} → ${t.roman}`);
+			});
 		}
 	}
 

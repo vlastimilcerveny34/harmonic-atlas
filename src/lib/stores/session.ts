@@ -24,6 +24,7 @@ export const lenses    = writable<Lenses>({
 	modalInterchange:  false,
 	chromaticMediant:  false,
 	secondaryDominant: false,
+	modalCadence:      false,
 });
 
 export const selectedChord = writable<ChordRef | null>(null);

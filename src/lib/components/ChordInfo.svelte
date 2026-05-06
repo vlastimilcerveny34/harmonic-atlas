@@ -32,6 +32,7 @@
 		modalInterchange:  { color: '#8eaf6e', label: 'Modal interchange' }, // overridden dynamically
 		chromaticMediant:  { color: '#b888c4', label: 'Chromatic mediants' },
 		secondaryDominant: { color: '#e8956d', label: 'Secondary dominants' },
+		modalCadence:      { color: '#c4a04a', label: 'Modal cadence' },
 	};
 
 	function sectionLabel(type: string): string {

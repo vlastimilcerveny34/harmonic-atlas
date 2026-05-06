@@ -39,7 +39,7 @@
 			<div class="sections">
 				<section>
 					<h3>The Circle</h3>
-					<p>The circle of fifths shows 36 chords across three rings — <span class="hl-maj">major</span> (outer), <span class="hl-dom">dominant 7th</span> (middle), and <span class="hl-min">minor</span> (inner). Chords that belong to the current key are shown brighter.</p>
+					<p>The circle of fifths shows 36 chords across three rings — <span class="hl-min">minor</span> (outer), <span class="hl-maj">major</span> (middle), and <span class="hl-dom">dominant 7th</span> (inner). Chords that belong to the current key are shown brighter.</p>
 				</section>
 
 				<section>
@@ -51,18 +51,20 @@
 					<h3>Lenses</h3>
 					<p>Lenses filter which relationships are shown as arrows:</p>
 					<ul>
-						<li><strong>Diatonic</strong> — standard movement within the key</li>
+						<li><strong>Diatonic</strong> — standard movement within the key. <em>Mode-aware:</em> moves are tailored per mode (e.g. in Mixolydian, ♭VII→I is preferred; in Phrygian, ♭II→i is the typical resolution).</li>
 						<li><strong>Dominant</strong> — V7 resolving to tonic</li>
 						<li><strong>Secondary dominant</strong> — V7 of any diatonic chord</li>
 						<li><strong>Tritone sub</strong> — dominant substitution a tritone away (♭II7)</li>
 						<li><strong>Modal interchange</strong> — chords borrowed from the parallel mode (e.g. ♭III, ♭VI, ♭VII from parallel minor)</li>
 						<li><strong>Chromatic mediant</strong> — same-quality chords a third away</li>
+						<li><strong>Modal cadence</strong> <span style="color:#c4a04a">●</span> — the <em>defining</em> cadence of the current mode, highlighted as a separate arrow type. Examples: ♭VII→I (Mixolydian), ♭II→i (Phrygian), II→I (Lydian), ♭VII→i + iv→i (Aeolian/Dorian). Use this to learn what makes each mode sound like itself.</li>
 					</ul>
 				</section>
 
 				<section>
 					<h3>Tonic &amp; Mode</h3>
-					<p>Use the dropdowns in the top right to set the key and mode. The circle updates instantly — diatonic chords light up for the selected key. The mode controls which 7-chord set counts as diatonic; modulation and borrowing are computed against the parallel mode.</p>
+					<p>Use the dropdowns in the top right to set the key and mode. The circle updates instantly — diatonic chords light up for the selected key. The mode controls which 7-chord set counts as diatonic <em>and</em> which functional moves the Diatonic lens highlights (each of the 7 modes has its own move-strength table). Modulation and borrowing are computed against the parallel mode.</p>
+					<p class="hint-tip">Tip: in modal keys, the tonic chord may be minor — in C Phrygian for example, the tonic chord is <strong>Cm</strong> (sitting on the outer ring of the E♭ spoke), not C major. Look for the lit minor nodes on the outer ring.</p>
 				</section>
 
 				<section>
@@ -85,7 +87,7 @@
 					<h3>Bridge — connect keys or chords</h3>
 					<p>The Bridge panel has two modes:</p>
 					<ul>
-						<li><strong>Between keys</strong> — pick a target key, the algorithm shows pivot chords, secondary dominants, chromatic mediants and multi-step paths via intermediate keys. Pivots are also highlighted on the circle.</li>
+						<li><strong>Between keys</strong> — pick a target key, the algorithm shows pivot chords, direct dominants, secondary dominants, chromatic mediants and multi-step paths via intermediate keys. Pivots are also highlighted on the circle.</li>
 						<li><strong>Between chords</strong> — pick a start and end chord, the pathfinder searches the harmonic graph (using current lenses) and ranks the smoothest connections.</li>
 					</ul>
 					<p>Click any path card to load it into the progression builder. Use <strong>SEARCH</strong> to compute and <strong>CLEAR</strong> to hide results.</p>
@@ -93,7 +95,7 @@
 
 				<section>
 					<h3>Preset Library</h3>
-					<p>Browse common chord progressions (pop, rock, J-pop, jazz cadences, cycles, re-harmonisations). Pick one from the dropdown to preview it and load it into the progression builder.</p>
+					<p>Browse common chord progressions (pop, rock, J-pop, jazz cadences, cycles, re-harmonisations, modulations). Pick one from the dropdown to preview it and load it into the progression builder.</p>
 				</section>
 
 				<section>
@@ -153,6 +155,11 @@
 	.hl-maj { color: #e08f9a; }
 	.hl-dom { color: #d4a44a; }
 	.hl-min { color: #7aa9c9; }
+
+	.hint-tip {
+		margin-top: 8px; font-size: 0.85rem; color: #9b948a;
+		border-left: 2px solid #c4a04a; padding-left: 10px;
+	}
 
 	.modal-footer {
 		margin-top: 28px; padding-top: 16px; border-top: 1px solid #2a251f;

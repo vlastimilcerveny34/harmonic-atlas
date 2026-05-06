@@ -16,6 +16,7 @@
 		modalInterchange:  { color: '#8eaf6e', dash: '4 3' },
 		chromaticMediant:  { color: '#b888c4', dash: '4 3' },
 		secondaryDominant: { color: '#e8956d', dash: '2 2' },
+		modalCadence:      { color: '#c4a04a', dash: '0' },
 	};
 
 	const chordNodes = buildCircleNodes();

@@ -8,6 +8,7 @@ const ALL_ON: Parameters<typeof outgoingRelationships>[3] = {
 	modalInterchange: true,
 	chromaticMediant: true,
 	secondaryDominant: true,
+	modalCadence: true,
 };
 
 const ONLY = (keys: string[]) => ({
@@ -17,6 +18,7 @@ const ONLY = (keys: string[]) => ({
 	modalInterchange: keys.includes('modalInterchange'),
 	chromaticMediant: keys.includes('chromaticMediant'),
 	secondaryDominant: keys.includes('secondaryDominant'),
+	modalCadence: keys.includes('modalCadence'),
 });
 
 describe('dominant resolution', () => {
