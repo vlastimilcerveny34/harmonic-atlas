@@ -57,7 +57,7 @@
 						<li><strong>Tritone sub</strong> — dominant substitution a tritone away (♭II7)</li>
 						<li><strong>Modal interchange</strong> — chords borrowed from the parallel mode (e.g. ♭III, ♭VI, ♭VII from parallel minor)</li>
 						<li><strong>Chromatic mediant</strong> — same-quality chords a third away</li>
-						<li><strong>Modal cadence</strong> <span style="color:#c4a04a">●</span> — the <em>defining</em> cadence of the current mode, highlighted as a separate arrow type. Examples: ♭VII→I (Mixolydian), ♭II→i (Phrygian), II→I (Lydian), ♭VII→i + iv→i (Aeolian/Dorian). Use this to learn what makes each mode sound like itself.</li>
+						<li><strong>Modal cadence</strong> <span style="color:#c4a04a">●</span> — the <em>defining</em> cadence of the current mode, highlighted as a separate arrow type. Examples: IV→I (Ionian/plagal), ♭VII→I (Mixolydian), ♭II→i (Phrygian), II→I (Lydian), ♭VII→i + iv→i (Aeolian/Dorian). Use this to learn what makes each mode sound like itself.</li>
 					</ul>
 				</section>
 

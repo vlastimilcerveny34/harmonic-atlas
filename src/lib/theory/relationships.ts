@@ -111,7 +111,7 @@ const FUNCTIONAL_MOVES_BY_MODE: Record<ModeName, Record<number, number[]>> = {
 // Characteristic cadence(s) of each mode — the moves that DEFINE the mode's sound.
 // Pairs of [fromDegree, toDegree]. Highlighted as a separate arrow type.
 const MODAL_CADENCES: Record<ModeName, Array<[number, number]>> = {
-	ionian:     [[4, 0]],            // V → I (authentic)
+	ionian:     [[3, 0]],            // IV → I (plagal — "Amen" cadence, distinct from dominant lens)
 	dorian:     [[6, 0], [3, 0]],    // ♭VII → i, IV → i
 	phrygian:   [[1, 0]],            // ♭II → i (Phrygian cadence)
 	lydian:     [[1, 0]],            // II → I (Lydian)
