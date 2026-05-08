@@ -149,9 +149,10 @@
 	}
 
 	@media (max-width: 600px) {
-		.header { margin-top: -8px; }
+		.header { margin-top: -12px; }
+		.header-top { align-items: flex-start; }
 		.logo { height: 70px; margin-left: 3px; margin-bottom: -4px; }
-		.controls { gap: 10px; flex-wrap: wrap; padding-left: 48px; }
+		.controls { gap: 10px; flex-wrap: wrap; padding-left: 53px; }
 		.content { padding: 0 8px 96px; }
 		.graph-col { margin: 0 -8px; }
 	}
