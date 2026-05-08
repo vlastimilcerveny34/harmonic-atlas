@@ -149,8 +149,9 @@
 	}
 
 	@media (max-width: 600px) {
-		.logo { height: 70px; margin-left: -12px; margin-bottom: -20px; }
+		.logo { height: 70px; margin-left: -20px; margin-bottom: -20px; }
 		.controls { gap: 10px; flex-wrap: wrap; }
-		.content { padding: 0 12px 96px; }
+		.content { padding: 0 8px 96px; }
+		.graph-col { margin: 0 -8px; }
 	}
 </style>
