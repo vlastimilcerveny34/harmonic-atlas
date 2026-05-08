@@ -26,7 +26,7 @@
 
 		<header class="header">
 			<div class="header-top">
-				<img src="/logo.png" alt="Harmony Mapper" class="logo" />
+				<img src={$theme === 'dark' ? '/logo-white.png' : '/logo.png'} alt="Harmony Mapper" class="logo" />
 				<div class="controls">
 					<label class="control-group">
 						<span class="control-label">Tonic</span>
@@ -101,7 +101,6 @@
 	}
 	.header-top { display: flex; align-items: center; justify-content: space-between; }
 	.logo { height: 102px; width: auto; display: block; margin-left: 3px; margin-bottom: -5px; }
-	:global([data-theme="dark"]) .logo { filter: brightness(0) invert(1); }
 	.version {
 		font-size: 0.75rem; color: var(--text-3);
 		letter-spacing: 0.12em; text-transform: uppercase;
