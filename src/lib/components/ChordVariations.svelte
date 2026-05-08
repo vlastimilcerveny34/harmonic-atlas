@@ -51,23 +51,23 @@
 {/if}
 
 <style>
-	.variations { margin-top: 14px; padding-top: 12px; border-top: 1px solid #2a251f; }
+	.variations { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-1); }
 	.vh-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
 	.vh-label {
-		font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #9b948a;
+		font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-3);
 	}
-	.vh-hint { font-size: 0.65rem; color: #5c5650; font-style: italic; font-family: 'Crimson Pro', serif; }
+	.vh-hint { font-size: 0.65rem; color: var(--text-5); font-style: italic; font-family: 'Crimson Pro', serif; }
 
 	.group { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 	.group-label {
-		font-size: 0.65rem; color: #7a736a; min-width: 78px;
+		font-size: 0.65rem; color: var(--text-4); min-width: 78px;
 		font-family: 'Outfit', sans-serif; letter-spacing: 0.05em;
 	}
 	.chips { display: flex; gap: 4px; flex-wrap: wrap; }
 	.var-chip {
-		background: #1a1612; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-4); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 3px 8px; border-radius: 3px; font-size: 0.78rem;
 		font-family: 'Outfit', sans-serif; cursor: pointer;
 	}
-	.var-chip:hover { background: #2a221a; border-color: #d4a574; color: #f4ead7; }
+	.var-chip:hover { background: var(--surface-5); border-color: var(--accent); color: var(--text-0); }
 </style>

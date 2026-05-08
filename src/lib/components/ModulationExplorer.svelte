@@ -179,56 +179,56 @@
 
 <style>
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	.panel-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; }
 	.panel-title {
 		font-family: 'Crimson Pro', serif; font-size: 0.7rem;
 		text-transform: uppercase; letter-spacing: 0.2em;
-		color: #d4a574; margin: 0; font-weight: 500;
+		color: var(--accent); margin: 0; font-weight: 500;
 	}
 	.btn-clear, .btn-activate {
-		background: transparent; border: 1px solid #3a342f; color: #9b948a;
+		background: transparent; border: 1px solid var(--border-3); color: var(--text-3);
 		padding: 3px 10px; border-radius: 3px; font-size: 0.7rem; cursor: pointer;
 		font-family: 'Outfit', sans-serif; letter-spacing: 0.05em;
 	}
-	.btn-activate { color: #d4a574; border-color: #5a4f3f; }
-	.btn-activate:hover { background: #2a221a; }
+	.btn-activate { color: var(--accent); border-color: var(--border-4); }
+	.btn-activate:hover { background: var(--surface-5); }
 
 	.target-row { display: flex; align-items: end; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
 	.control-group { display: flex; flex-direction: column; gap: 4px; }
-	.control-label { color: #9b948a; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
+	.control-label { color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
 	select {
-		background: #13100e; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-2); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 4px 6px; border-radius: 3px; font-size: 0.85rem; font-family: inherit;
 	}
 
-	.empty { font-size: 0.8rem; color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
+	.empty { font-size: 0.8rem; color: var(--text-4); font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
 
 	.bridge-group { margin-bottom: 12px; }
 	.bridge-type-label { font-size: 0.7rem; letter-spacing: 0.05em; margin-bottom: 6px; }
 	.path-card {
-		background: #0f0d0b; border: 1px solid #26211c; border-radius: 4px;
+		background: var(--surface-1); border: 1px solid var(--border-2); border-radius: 4px;
 		padding: 8px 10px; margin-bottom: 6px; cursor: pointer;
 	}
-	.path-card:hover { background: #161210; border-color: #3a342f; }
-	.multistep-card { border-color: #2a4a2a; }
-	.multistep-card:hover { background: #101510; border-color: #3a6a3a; }
+	.path-card:hover { background: var(--surface-hover); border-color: var(--border-3); }
+	.multistep-card { border-color: var(--border-green-1); }
+	.multistep-card:hover { background: var(--surface-green-0); border-color: var(--border-green-2); }
 
 	.bridge-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
-	.bridge-chord { font-size: 0.95rem; color: #f4ead7; font-weight: 500; }
-	.bridge-roles { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.75rem; color: #9b948a; }
-	.bridge-roles .role { color: #c8c1b5; }
-	.arr, .example-arr { color: #5c5650; margin: 0 2px; }
+	.bridge-chord { font-size: 0.95rem; color: var(--text-0); font-weight: 500; }
+	.bridge-roles { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.75rem; color: var(--text-3); }
+	.bridge-roles .role { color: var(--text-2); }
+	.arr, .example-arr { color: var(--text-5); margin: 0 2px; }
 	.example { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
 	.chord-chip {
-		background: #1a1612; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-4); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8rem;
 		font-family: 'Outfit', sans-serif;
 	}
-	.chord-chip:hover { background: #2a221a; }
+	.chord-chip:hover { background: var(--surface-5); }
 	.multistep-via { font-size: 0.8rem; color: #a8c07a; font-weight: 500; }
-	.ms-chord { font-size: 0.85rem; color: #e8e2d5; font-weight: 500; font-family: 'Outfit', sans-serif; }
-	.ms-arr { color: #5c5650; font-size: 0.75rem; }
+	.ms-chord { font-size: 0.85rem; color: var(--text-1); font-weight: 500; font-family: 'Outfit', sans-serif; }
+	.ms-arr { color: var(--text-5); font-size: 0.75rem; }
 </style>

@@ -153,7 +153,7 @@
 		<circle cx={CENTER.x} cy={CENTER.y} r="200" fill="url(#centerGlow)" />
 
 		{#each [160, 230, 295] as r}
-			<circle cx={CENTER.x} cy={CENTER.y} {r} fill="none" stroke="#26211c" stroke-width="0.5" stroke-dasharray="2 6" />
+			<circle cx={CENTER.x} cy={CENTER.y} {r} fill="none" style="stroke: var(--border-2)" stroke-width="0.5" stroke-dasharray="2 6" />
 		{/each}
 
 		{#each FIFTHS_PCS as _, i}
@@ -161,7 +161,7 @@
 			<line
 				x1={CENTER.x + Math.cos(angle) * 130} y1={CENTER.y + Math.sin(angle) * 130}
 				x2={CENTER.x + Math.cos(angle) * 320} y2={CENTER.y + Math.sin(angle) * 320}
-				stroke="#1f1b17" stroke-width="0.5"
+				style="stroke: var(--border-2)" stroke-width="0.5"
 			/>
 		{/each}
 
@@ -170,8 +170,8 @@
 			<text
 				x={CENTER.x + Math.cos(angle) * 340}
 				y={CENTER.y + Math.sin(angle) * 340}
-				text-anchor="middle" dominant-baseline="middle" fill="#d4a574"
-				style="font-family:'Crimson Pro',serif; font-size:13px; font-style:italic;"
+				text-anchor="middle" dominant-baseline="middle"
+				style="font-family:'Crimson Pro',serif; font-size:13px; font-style:italic; fill: var(--accent);"
 			>tonic</text>
 		{/if}
 
@@ -276,12 +276,11 @@
 						fill="none" stroke="#d4a574" stroke-width="2" opacity="0.9"
 					/>
 					<circle cx={node.x} cy={node.y + node.r + 8} r="8"
-						fill="#1a1410" stroke="#d4a574" stroke-width="1.5"
+						style="fill: var(--badge-bg); stroke: var(--accent)" stroke-width="1.5"
 					/>
 					<text x={node.x} y={node.y + node.r + 8}
 						text-anchor="middle" dominant-baseline="central"
-						fill="#d4a574"
-						style="font-family:'Outfit',sans-serif; font-size:9px; font-weight:700; pointer-events:none;"
+						style="font-family:'Outfit',sans-serif; font-size:9px; font-weight:700; pointer-events:none; fill: var(--accent);"
 					>{pathStep}</text>
 				{/if}
 
@@ -310,8 +309,8 @@
 		{/each}
 
 		<g opacity="0.2">
-			<line x1={CENTER.x - 10} y1={CENTER.y} x2={CENTER.x + 10} y2={CENTER.y} stroke="#9b948a" stroke-width="0.5" />
-			<line x1={CENTER.x} y1={CENTER.y - 10} x2={CENTER.x} y2={CENTER.y + 10} stroke="#9b948a" stroke-width="0.5" />
+			<line x1={CENTER.x - 10} y1={CENTER.y} x2={CENTER.x + 10} y2={CENTER.y} style="stroke: var(--text-3)" stroke-width="0.5" />
+			<line x1={CENTER.x} y1={CENTER.y - 10} x2={CENTER.x} y2={CENTER.y + 10} style="stroke: var(--text-3)" stroke-width="0.5" />
 		</g>
 	</svg>
 </div>
@@ -320,11 +319,11 @@
 	.graph-wrap { position: relative; width: 100%; max-width: 720px; cursor: default; }
 	.clear-path-btn {
 		position: absolute; top: 10px; right: 10px; z-index: 10;
-		background: #1a1410; border: 1px solid #d4a574; color: #d4a574;
+		background: var(--badge-bg); border: 1px solid var(--accent); color: var(--accent);
 		padding: 5px 12px; border-radius: 4px; cursor: pointer;
 		font-family: 'Outfit', sans-serif; font-size: 0.75rem; letter-spacing: 0.05em;
 	}
-	.clear-path-btn:hover { background: #2a2018; }
+	.clear-path-btn:hover { background: var(--surface-5); }
 	.graph-svg { width: 100%; height: auto; display: block; }
 	.chord-node { cursor: pointer; }
 	.chord-node:hover .bg { filter: brightness(1.4); }

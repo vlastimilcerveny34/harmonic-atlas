@@ -11,6 +11,7 @@
 	import { audioReady, audioLoading } from '$lib/audio/synth.js';
 	import HelpModal from '$lib/components/HelpModal.svelte';
 	import { NOTE_NAMES_DISPLAY as NOTE_NAMES } from '$lib/theory/noteNames.js';
+	import { theme } from '$lib/stores/session.js';
 
 	let showHelp = $state(false);
 
@@ -24,31 +25,29 @@
 	<div class="content">
 
 		<header class="header">
-			<div>
-				<h1 class="title">
-					Harmony Mapper
+			<div class="header-top">
+				<img src="/logo.png" alt="Harmony Mapper" class="logo" />
+				<div class="controls">
+					<label class="control-group">
+						<span class="control-label">Tonic</span>
+						<select value={$tonicPc} onchange={(e) => tonicPc.set(parseInt((e.target as HTMLSelectElement).value))}>
+							{#each Array.from({ length: 12 }, (_, i) => i) as pc}
+								<option value={pc}>{NOTE_NAMES[pc]}</option>
+							{/each}
+						</select>
+					</label>
+					<label class="control-group">
+						<span class="control-label">Mode</span>
+						<select value={$modeName} onchange={(e) => modeName.set((e.target as HTMLSelectElement).value as typeof $modeName)}>
+							{#each MODE_NAMES as key}
+								<option value={key}>{MODES[key].label}</option>
+							{/each}
+						</select>
+					</label>
 					<span class="version">v1.3 · beta</span>
-				</h1>
-				<p class="subtitle">Click any chord to see where it can lead &nbsp;&nbsp;&nbsp;<button class="btn-help" onclick={() => showHelp = true} title="How to use">?</button></p>
+				</div>
 			</div>
-			<div class="controls">
-				<label class="control-group">
-					<span class="control-label">Tonic</span>
-					<select value={$tonicPc} onchange={(e) => tonicPc.set(parseInt((e.target as HTMLSelectElement).value))}>
-						{#each Array.from({ length: 12 }, (_, i) => i) as pc}
-							<option value={pc}>{NOTE_NAMES[pc]}</option>
-						{/each}
-					</select>
-				</label>
-				<label class="control-group">
-					<span class="control-label">Mode</span>
-					<select value={$modeName} onchange={(e) => modeName.set((e.target as HTMLSelectElement).value as typeof $modeName)}>
-						{#each MODE_NAMES as key}
-							<option value={key}>{MODES[key].label}</option>
-						{/each}
-					</select>
-				</label>
-			</div>
+			<p class="subtitle">Click any chord to see where it can lead &nbsp;&nbsp;&nbsp;<button class="btn-help" onclick={() => showHelp = true} title="How to use">?</button> <button class="btn-help btn-theme" onclick={() => theme.toggle()} title="{$theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}">{$theme === 'dark' ? '☀' : '◑'}</button></p>
 		</header>
 
 		<div class="main-grid">
@@ -94,28 +93,27 @@
 
 <style>
 	.page { width: 100%; min-height: 100vh; }
-	.content { max-width: 1280px; margin: 0 auto; padding: 32px 24px 96px; }
+	.content { max-width: 1280px; margin: 0 auto; padding: 0 24px 96px; }
 
 	.header {
-		display: flex; align-items: baseline; justify-content: space-between;
-		margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #2a251f;
+		display: flex; flex-direction: column; gap: 0;
+		margin-bottom: 4px; padding-bottom: 0;
 	}
-	.title {
-		font-family: 'Crimson Pro', serif; font-weight: 500;
-		font-size: 2.4rem; letter-spacing: -0.01em; line-height: 1; color: #f4ead7;
-	}
+	.header-top { display: flex; align-items: center; justify-content: space-between; }
+	.logo { height: 180px; width: auto; display: block; margin-left: -30px; margin-bottom: -47px; }
+	:global([data-theme="dark"]) .logo { filter: brightness(0) invert(1); }
 	.version {
-		font-size: 0.7rem; margin-left: 12px; color: #9b948a;
-		letter-spacing: 0.15em; text-transform: uppercase; vertical-align: middle;
+		font-size: 0.75rem; color: var(--text-3);
+		letter-spacing: 0.12em; text-transform: uppercase;
 	}
 	.subtitle {
 		font-family: 'Crimson Pro', serif; font-style: italic;
-		color: #9b948a; font-size: 1rem; margin-top: 4px;
+		color: var(--text-3); font-size: 1rem;
 	}
 	.controls { display: flex; align-items: center; gap: 16px; }
 	.control-group { display: flex; align-items: center; gap: 8px; }
 	.control-label {
-		color: #9b948a; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;
+		color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;
 	}
 
 	.main-grid {
@@ -125,25 +123,26 @@
 	.sidebar { display: flex; flex-direction: column; gap: 20px; }
 
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	.footer {
-		margin-top: 32px; padding-top: 16px; border-top: 1px solid #2a251f;
-		font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #5c5650;
+		margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border-1);
+		font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-5);
 		display: flex; gap: 16px; flex-wrap: wrap;
 	}
-	.footer-key { color: #7a736a; }
-	.footer-copy { margin-left: auto; color: #5c5650; }
-	.footer-link { color: #7a736a; text-decoration: none; }
-	.footer-link:hover { color: #d4a574; }
+	.footer-key { color: var(--text-4); }
+	.footer-copy { margin-left: auto; color: var(--text-5); }
+	.footer-link { color: var(--text-4); text-decoration: none; }
+	.footer-link:hover { color: var(--accent); }
 	.btn-help {
 		width: 28px; height: 28px; border-radius: 50%;
-		background: transparent; border: 1px solid #3a342f;
-		color: #9b948a; font-size: 0.85rem; cursor: pointer;
+		background: transparent; border: 1px solid var(--border-3);
+		color: var(--text-3); font-size: 0.85rem; cursor: pointer;
 		font-family: 'Outfit', sans-serif; line-height: 1;
 	}
-	.btn-help:hover { border-color: #d4a574; color: #d4a574; }
+	.btn-help:hover { border-color: var(--accent); color: var(--accent); }
+	.btn-theme { font-size: 1rem; }
 
 	@media (max-width: 900px) {
 		.main-grid { grid-template-columns: 1fr; }

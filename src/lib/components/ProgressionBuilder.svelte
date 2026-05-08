@@ -52,8 +52,6 @@
 			<button
 				class="btn-play"
 				disabled={$progression.length === 0}
-				style:background={$progression.length ? '#d4a574' : '#3a342f'}
-				style:color={$progression.length ? '#1a1612' : '#7a736a'}
 				onclick={() => playProgression($progression, $tonicPc, $modeName)}
 			>▶ PLAY</button>
 			<button
@@ -83,8 +81,8 @@
 
 	.prog-section {
 		position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-		background: #0f0d0b;
-		border-top: 1px solid #2a251f;
+		background: var(--surface-1);
+		border-top: 1px solid var(--border-1);
 		padding: 10px 24px;
 	}
 	.prog-row {
@@ -92,20 +90,20 @@
 	}
 	.prog-label {
 		font-family: 'Crimson Pro', serif; font-size: 1.1rem;
-		color: #f4ead7; font-weight: 500;
+		color: var(--text-0); font-weight: 500;
 	}
 	.hint {
-		font-size: 0.7rem; color: #7a736a; font-family: 'Outfit', sans-serif;
+		font-size: 0.7rem; color: var(--text-4); font-family: 'Outfit', sans-serif;
 		text-transform: uppercase; letter-spacing: 0.1em;
 	}
 	.prog-strip {
 		flex: 1 1 auto; min-width: 240px;
 		display: flex; flex-wrap: wrap; gap: 6px;
 		padding: 6px 10px; min-height: 40px;
-		border-radius: 4px; background: #13100e; border: 1px solid #2a251f;
+		border-radius: 4px; background: var(--surface-2); border: 1px solid var(--border-1);
 		align-items: center;
 	}
-	.empty { color: #5c5650; font-style: italic; font-family: 'Crimson Pro', serif; font-size: 0.85rem; }
+	.empty { color: var(--text-5); font-style: italic; font-family: 'Crimson Pro', serif; font-size: 0.85rem; }
 	.prog-item { display: flex; align-items: center; gap: 4px; }
 	.chord-chip {
 		background: transparent; border: none; cursor: pointer;
@@ -114,23 +112,24 @@
 		transition: filter 0.15s;
 	}
 	.chord-chip:hover { filter: brightness(1.15); }
-	.chip-name { font-weight: 500; font-size: 0.9rem; color: #1a1612; }
-	.chip-roman { font-size: 0.6rem; opacity: 0.7; font-family: 'Crimson Pro', serif; font-style: italic; color: #1a1612; }
-	.arrow { color: #5c5650; font-size: 0.75rem; }
+	.chip-name { font-weight: 500; font-size: 0.9rem; color: var(--on-chip); }
+	.chip-roman { font-size: 0.6rem; opacity: 0.7; font-family: 'Crimson Pro', serif; font-style: italic; color: var(--on-chip); }
+	.arrow { color: var(--text-5); font-size: 0.75rem; }
 
 	.prog-actions { display: flex; gap: 6px; }
 	.btn-play, .btn-export, .btn-clear {
-		border: 1px solid #3a342f; padding: 5px 12px; border-radius: 3px;
+		border: 1px solid var(--border-3); padding: 5px 12px; border-radius: 3px;
 		font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer;
 		font-family: 'Outfit', sans-serif;
 	}
-	.btn-play { border: none; font-weight: 500; }
-	.btn-export { background: transparent; color: #d4a574; }
-	.btn-export:hover:not(:disabled) { background: #2a221a; }
-	.btn-color { background: transparent; color: #8eaf6e; border-color: #3a4a32; }
-	.btn-color:hover:not(:disabled) { background: #1a221a; }
-	.btn-color.active { background: #2a3a22; color: #c8dca0; border-color: #5a7a45; }
-	.btn-clear { background: transparent; color: #9b948a; }
-	.btn-clear:hover:not(:disabled) { background: #1a1612; }
-	.btn-play:disabled, .btn-export:disabled, .btn-clear:disabled { opacity: 0.4; cursor: not-allowed; }
+	.btn-play { border: none; font-weight: 500; background: var(--accent); color: var(--on-accent); }
+	.btn-play:disabled { background: var(--border-3); color: var(--text-4); opacity: 1; cursor: not-allowed; }
+	.btn-export { background: transparent; color: var(--accent); }
+	.btn-export:hover:not(:disabled) { background: var(--surface-5); }
+	.btn-color { background: transparent; color: var(--btn-color-text); border-color: var(--btn-color-border); }
+	.btn-color:hover:not(:disabled) { background: var(--surface-green-1); }
+	.btn-color.active { background: var(--btn-color-bg-active); color: var(--btn-color-text-active); border-color: var(--btn-color-border-active); }
+	.btn-clear { background: transparent; color: var(--text-3); }
+	.btn-clear:hover:not(:disabled) { background: var(--surface-4); }
+	.btn-export:disabled, .btn-clear:disabled { opacity: 0.4; cursor: not-allowed; }
 </style>

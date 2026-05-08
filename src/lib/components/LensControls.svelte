@@ -32,7 +32,7 @@
 				class="toggle-row"
 				onclick={() => lenses.update(s => ({ ...s, [def.key]: !s[def.key] }))}
 			>
-				<div class="toggle-track" style:background={checked ? color : '#3a342f'}>
+				<div class="toggle-track" class:is-on={checked} style:--color={color}>
 					<div class="toggle-thumb" style:left={checked ? '16px' : '2px'}></div>
 				</div>
 				<div class="toggle-label">
@@ -47,8 +47,8 @@
 
 <style>
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1);
 		border-radius: 6px;
 		padding: 16px 18px;
 	}
@@ -57,7 +57,7 @@
 		font-size: 0.7rem;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
-		color: #d4a574;
+		color: var(--accent);
 		margin: 0 0 12px;
 		font-weight: 500;
 	}
@@ -69,11 +69,13 @@
 	.toggle-track {
 		width: 32px; height: 18px; border-radius: 9px;
 		position: relative; flex-shrink: 0; margin-top: 2px;
+		background: var(--border-3);
 		transition: background 0.2s;
 	}
+	.toggle-track.is-on { background: var(--color); }
 	.toggle-thumb {
 		width: 14px; height: 14px; border-radius: 50%;
-		background: #0a0807; position: absolute; top: 2px;
+		background: var(--toggle-thumb); position: absolute; top: 2px;
 		transition: left 0.2s;
 	}
 	.toggle-label { display: flex; flex-direction: column; gap: 2px; }
@@ -81,9 +83,9 @@
 		display: inline-block; width: 8px; height: 8px;
 		border-radius: 50%; margin-right: 6px; vertical-align: middle;
 	}
-	.label-text { font-size: 0.9rem; color: #e8e2d5; }
+	.label-text { font-size: 0.9rem; color: var(--text-1); }
 	.desc {
-		font-size: 0.75rem; color: #7a736a;
+		font-size: 0.75rem; color: var(--text-4);
 		font-family: 'Crimson Pro', serif; font-style: italic;
 	}
 </style>

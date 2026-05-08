@@ -115,26 +115,26 @@
 <style>
 	.overlay {
 		position: fixed; inset: 0; z-index: 200;
-		background: rgba(0,0,0,0.7);
+		background: var(--overlay);
 		display: flex; align-items: center; justify-content: center;
 		padding: 24px;
 	}
 	.modal {
-		background: #16120f; border: 1px solid #3a342f; border-radius: 8px;
+		background: var(--surface-3); border: 1px solid var(--border-3); border-radius: 8px;
 		max-width: 600px; width: 100%; max-height: 85vh;
 		overflow-y: auto; padding: 32px;
 		position: relative;
 	}
 	.close-btn {
 		position: absolute; top: 16px; right: 16px;
-		background: transparent; border: none; color: #9b948a;
+		background: transparent; border: none; color: var(--text-3);
 		font-size: 1rem; cursor: pointer; padding: 4px 8px;
 	}
-	.close-btn:hover { color: #f4ead7; }
+	.close-btn:hover { color: var(--text-0); }
 
 	.modal-title {
 		font-family: 'Crimson Pro', serif; font-size: 1.6rem;
-		color: #f4ead7; font-weight: 500; margin: 0 0 24px;
+		color: var(--text-0); font-weight: 500; margin: 0 0 24px;
 	}
 
 	.sections { display: flex; flex-direction: column; gap: 20px; }
@@ -142,31 +142,31 @@
 	section h3 {
 		font-family: 'Outfit', sans-serif; font-size: 0.7rem;
 		text-transform: uppercase; letter-spacing: 0.15em;
-		color: #d4a574; margin: 0 0 6px;
+		color: var(--accent); margin: 0 0 6px;
 	}
 	section p, section ul {
 		font-family: 'Crimson Pro', serif; font-size: 1rem;
-		color: #c8c1b5; margin: 0; line-height: 1.6;
+		color: var(--text-2); margin: 0; line-height: 1.6;
 	}
 	section ul { padding-left: 18px; }
 	section li { margin-bottom: 4px; }
-	strong { color: #e8e2d5; }
+	strong { color: var(--text-1); }
 
 	.hl-maj { color: #e08f9a; }
 	.hl-dom { color: #d4a44a; }
 	.hl-min { color: #7aa9c9; }
 
 	.hint-tip {
-		margin-top: 8px; font-size: 0.85rem; color: #9b948a;
+		margin-top: 8px; font-size: 0.85rem; color: var(--text-3);
 		border-left: 2px solid #c4a04a; padding-left: 10px;
 	}
 
 	.modal-footer {
-		margin-top: 28px; padding-top: 16px; border-top: 1px solid #2a251f;
+		margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border-1);
 		display: flex; justify-content: space-between; align-items: center;
 		font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
 	}
-	.contact-link { color: #d4a574; text-decoration: none; }
+	.contact-link { color: var(--accent); text-decoration: none; }
 	.contact-link:hover { text-decoration: underline; }
-	.copy { color: #5c5650; }
+	.copy { color: var(--text-5); }
 </style>

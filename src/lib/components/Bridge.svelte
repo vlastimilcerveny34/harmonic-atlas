@@ -302,33 +302,33 @@
 
 <style>
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
 	.panel-title {
 		font-family: 'Crimson Pro', serif; font-size: 0.7rem;
 		text-transform: uppercase; letter-spacing: 0.2em;
-		color: #d4a574; margin: 0; font-weight: 500;
+		color: var(--accent); margin: 0; font-weight: 500;
 	}
 
-	.mode-switch { display: flex; gap: 0; border: 1px solid #3a342f; border-radius: 4px; overflow: hidden; }
+	.mode-switch { display: flex; gap: 0; border: 1px solid var(--border-3); border-radius: 4px; overflow: hidden; }
 	.mode-switch button {
 		background: transparent; border: none; padding: 4px 10px; font-size: 0.7rem;
-		color: #9b948a; cursor: pointer; font-family: 'Outfit', sans-serif;
+		color: var(--text-3); cursor: pointer; font-family: 'Outfit', sans-serif;
 		letter-spacing: 0.05em;
 	}
-	.mode-switch button.active { background: #2a221a; color: #d4a574; }
-	.mode-switch button:hover:not(.active) { background: #1a1612; color: #c8c1b5; }
+	.mode-switch button.active { background: var(--surface-5); color: var(--accent); }
+	.mode-switch button:hover:not(.active) { background: var(--surface-4); color: var(--text-2); }
 
 	.inputs-row { display: flex; align-items: end; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 	.control-group, .endpoint { display: flex; flex-direction: column; gap: 4px; }
 	.endpoint-fields { display: flex; gap: 4px; }
-	.control-label { color: #9b948a; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
-	.arr-big { color: #7a736a; font-size: 1.2rem; padding-bottom: 4px; }
+	.control-label { color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
+	.arr-big { color: var(--text-4); font-size: 1.2rem; padding-bottom: 4px; }
 
 	select {
-		background: #13100e; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-2); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 4px 6px; border-radius: 3px; font-size: 0.85rem; font-family: inherit;
 	}
 
@@ -336,16 +336,16 @@
 	.btn-search, .btn-clear {
 		padding: 5px 14px; border-radius: 3px; font-size: 0.7rem;
 		font-family: 'Outfit', sans-serif; letter-spacing: 0.05em;
-		cursor: pointer; border: 1px solid #3a342f;
+		cursor: pointer; border: 1px solid var(--border-3);
 	}
-	.btn-search { background: #2a221a; border-color: #5a4f3f; color: #d4a574; }
-	.btn-search:hover { background: #3a2e22; }
-	.btn-clear { background: transparent; color: #9b948a; }
-	.btn-clear:hover:not(:disabled) { background: #1a1612; color: #c8c1b5; }
+	.btn-search { background: var(--surface-5); border-color: var(--border-4); color: var(--accent); }
+	.btn-search:hover { background: var(--surface-6); }
+	.btn-clear { background: transparent; color: var(--text-3); }
+	.btn-clear:hover:not(:disabled) { background: var(--surface-4); color: var(--text-2); }
 	.btn-clear:disabled { opacity: 0.35; cursor: not-allowed; }
 
 	.results-area { min-height: 30px; }
-	.empty { font-size: 0.8rem; color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
+	.empty { font-size: 0.8rem; color: var(--text-4); font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
 
 	.results { display: flex; flex-direction: column; gap: 6px; max-height: 320px; overflow-y: auto; padding-right: 4px; }
 
@@ -353,34 +353,34 @@
 	.bridge-type-label { font-size: 0.7rem; letter-spacing: 0.05em; margin-bottom: 6px; }
 
 	.path-card {
-		background: #0f0d0b; border: 1px solid #26211c; border-radius: 4px;
+		background: var(--surface-1); border: 1px solid var(--border-2); border-radius: 4px;
 		padding: 8px 10px; margin-bottom: 6px; cursor: pointer;
 	}
-	.path-card:hover { background: #161210; border-color: #3a342f; }
-	.multistep-card { border-color: #2a4a2a; }
-	.multistep-card:hover { background: #101510; border-color: #3a6a3a; }
+	.path-card:hover { background: var(--surface-hover); border-color: var(--border-3); }
+	.multistep-card { border-color: var(--border-green-1); }
+	.multistep-card:hover { background: var(--surface-green-0); border-color: var(--border-green-2); }
 
 	.bridge-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
-	.bridge-chord { font-size: 0.95rem; color: #f4ead7; font-weight: 500; }
-	.bridge-roles { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.75rem; color: #9b948a; }
-	.bridge-roles .role { color: #c8c1b5; }
-	.arr, .example-arr { color: #5c5650; margin: 0 2px; }
+	.bridge-chord { font-size: 0.95rem; color: var(--text-0); font-weight: 500; }
+	.bridge-roles { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.75rem; color: var(--text-3); }
+	.bridge-roles .role { color: var(--text-2); }
+	.arr, .example-arr { color: var(--text-5); margin: 0 2px; }
 
 	.path-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
 	.character {
 		font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase;
 		font-family: 'Outfit', sans-serif;
 	}
-	.meta { font-size: 0.7rem; color: #5c5650; font-family: 'JetBrains Mono', monospace; }
+	.meta { font-size: 0.7rem; color: var(--text-5); font-family: 'JetBrains Mono', monospace; }
 
 	.example { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
 	.chord-chip {
-		background: #1a1612; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-4); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8rem;
 		font-family: 'Outfit', sans-serif;
 	}
-	.chord-chip:hover { background: #2a221a; }
+	.chord-chip:hover { background: var(--surface-5); }
 	.multistep-via { font-size: 0.8rem; color: #a8c07a; font-weight: 500; }
-	.ms-chord { font-size: 0.85rem; color: #e8e2d5; font-weight: 500; font-family: 'Outfit', sans-serif; }
-	.ms-arr { color: #5c5650; font-size: 0.75rem; }
+	.ms-chord { font-size: 0.85rem; color: var(--text-1); font-weight: 500; font-family: 'Outfit', sans-serif; }
+	.ms-arr { color: var(--text-5); font-size: 0.75rem; }
 </style>

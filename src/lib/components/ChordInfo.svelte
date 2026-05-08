@@ -127,39 +127,39 @@
 <style>
 	.chord-info { animation: fadeIn 0.3s ease-out; }
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
 	.header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
 	.name-row { display: flex; align-items: baseline; gap: 10px; }
 	.chord-name { font-family: 'Crimson Pro', serif; font-size: 2rem; font-weight: 500; line-height: 1; }
-	.roman { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 1.3rem; color: #d4a574; }
+	.roman { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 1.3rem; color: var(--accent); }
 	.clear-btn {
-		background: transparent; border: 1px solid #3a342f; color: #9b948a;
+		background: transparent; border: 1px solid var(--border-3); color: var(--text-3);
 		padding: 3px 8px; border-radius: 3px; font-size: 0.7rem; cursor: pointer;
 		font-family: 'Outfit', sans-serif;
 	}
-	.quality-line { font-size: 0.8rem; color: #9b948a; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-	.notes { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #c8c1b5; margin-bottom: 12px; }
+	.quality-line { font-size: 0.8rem; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+	.notes { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-2); margin-bottom: 12px; }
 	.outgoing-header {
 		font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
-		color: #9b948a; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
+		color: var(--text-3); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;
 	}
 	.vl-toggle {
-		background: transparent; border: 1px solid #3a342f; padding: 2px 6px;
+		background: transparent; border: 1px solid var(--border-3); padding: 2px 6px;
 		border-radius: 3px; font-size: 0.65rem; cursor: pointer;
 		font-family: 'Outfit', sans-serif; letter-spacing: 0.1em;
 	}
 	.vl-info { margin-left: auto; display: flex; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; }
 	.vl-common { color: #8eaf6e; }
-	.vl-dist { color: #d4a574; }
+	.vl-dist { color: var(--accent); }
 	.outgoing-list { max-height: 220px; overflow-y: auto; padding-right: 4px; }
 	.rel-group { margin-bottom: 8px; }
 	.rel-type-label { font-size: 0.7rem; letter-spacing: 0.05em; margin-bottom: 3px; }
 	.rel-row { display: flex; align-items: center; gap: 8px; padding: 2px 0 2px 8px; }
-	.rel-chord { font-size: 0.85rem; color: #e8e2d5; font-weight: 500; min-width: 44px; }
-	.rel-label { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.78rem; color: #9b948a; }
-	.no-rels { font-size: 0.8rem; color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; margin-top: 8px; }
+	.rel-chord { font-size: 0.85rem; color: var(--text-1); font-weight: 500; min-width: 44px; }
+	.rel-label { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 0.78rem; color: var(--text-3); }
+	.no-rels { font-size: 0.8rem; color: var(--text-4); font-style: italic; font-family: 'Crimson Pro', serif; margin-top: 8px; }
 </style>

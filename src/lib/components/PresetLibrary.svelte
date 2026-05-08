@@ -81,42 +81,42 @@
 
 <style>
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	.panel-title {
 		font-family: 'Crimson Pro', serif; font-size: 0.7rem;
 		text-transform: uppercase; letter-spacing: 0.2em;
-		color: #d4a574; margin: 0 0 10px; font-weight: 500;
+		color: var(--accent); margin: 0 0 10px; font-weight: 500;
 	}
 
 	.preset-select {
-		width: 100%; background: #13100e; border: 1px solid #3a342f;
-		color: #e8e2d5; padding: 5px 8px; border-radius: 3px;
+		width: 100%; background: var(--surface-2); border: 1px solid var(--border-3);
+		color: var(--text-1); padding: 5px 8px; border-radius: 3px;
 		font-size: 0.85rem; font-family: inherit; margin-bottom: 10px; cursor: pointer;
 	}
-	.preset-select:focus { outline: 1px solid #d4a574; }
+	.preset-select:focus { outline: 1px solid var(--accent); }
 
 	.path-card {
-		background: #0f0d0b; border: 1px solid #26211c; border-radius: 4px;
+		background: var(--surface-1); border: 1px solid var(--border-2); border-radius: 4px;
 		padding: 10px 12px; cursor: pointer;
 	}
-	.path-card:hover { background: #161210; border-color: #3a342f; }
+	.path-card:hover { background: var(--surface-hover); border-color: var(--border-3); }
 
 	.preset-desc {
 		font-family: 'Crimson Pro', serif; font-style: italic;
-		font-size: 0.8rem; color: #9b948a; margin-bottom: 8px;
+		font-size: 0.8rem; color: var(--text-3); margin-bottom: 8px;
 	}
 	.example { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 	.chord-chip {
-		background: #1a1612; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-4); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8rem;
 		font-family: 'Outfit', sans-serif;
 	}
-	.chord-chip:hover { background: #2a221a; }
-	.example-arr { color: #5c5650; }
+	.chord-chip:hover { background: var(--surface-5); }
+	.example-arr { color: var(--text-5); }
 	.hint {
-		font-size: 0.75rem; color: #7a736a; font-style: italic;
+		font-size: 0.75rem; color: var(--text-4); font-style: italic;
 		font-family: 'Crimson Pro', serif; margin: 8px 0 0; line-height: 1.4;
 	}
 </style>

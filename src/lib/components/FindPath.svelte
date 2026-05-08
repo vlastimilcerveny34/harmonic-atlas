@@ -126,54 +126,54 @@
 
 <style>
 	.panel {
-		background: linear-gradient(180deg, #16120f 0%, #13100e 100%);
-		border: 1px solid #2a251f; border-radius: 6px; padding: 16px 18px;
+		background: linear-gradient(180deg, var(--surface-3) 0%, var(--surface-2) 100%);
+		border: 1px solid var(--border-1); border-radius: 6px; padding: 16px 18px;
 	}
 	.panel-title {
 		font-family: 'Crimson Pro', serif; font-size: 0.7rem;
 		text-transform: uppercase; letter-spacing: 0.2em;
-		color: #d4a574; margin: 0 0 12px; font-weight: 500;
+		color: var(--accent); margin: 0 0 12px; font-weight: 500;
 	}
 
 	.endpoint-row { display: flex; align-items: end; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 	.endpoint { display: flex; flex-direction: column; gap: 4px; }
-	.endpoint-label { color: #9b948a; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
+	.endpoint-label { color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem; }
 	.endpoint select {
-		background: #13100e; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-2); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 4px 6px; border-radius: 3px; font-size: 0.8rem; font-family: inherit;
 	}
-	.arr-big { color: #7a736a; font-size: 1.2rem; padding-bottom: 4px; }
+	.arr-big { color: var(--text-4); font-size: 1.2rem; padding-bottom: 4px; }
 
 	.btn-search {
-		background: #2a221a; border: 1px solid #5a4f3f; color: #d4a574;
+		background: var(--surface-5); border: 1px solid var(--border-4); color: var(--accent);
 		padding: 5px 14px; border-radius: 3px; font-size: 0.75rem;
 		font-family: 'Outfit', sans-serif; letter-spacing: 0.05em;
 		cursor: pointer; margin-bottom: 12px;
 	}
-	.btn-search:hover { background: #3a2e22; }
+	.btn-search:hover { background: var(--surface-6); }
 
-	.empty { font-size: 0.8rem; color: #7a736a; font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
+	.empty { font-size: 0.8rem; color: var(--text-4); font-style: italic; font-family: 'Crimson Pro', serif; margin: 4px 0; }
 
 	.results { display: flex; flex-direction: column; gap: 6px; max-height: 320px; overflow-y: auto; padding-right: 4px; }
 	.path-card {
-		background: #0f0d0b; border: 1px solid #26211c; border-radius: 4px;
+		background: var(--surface-1); border: 1px solid var(--border-2); border-radius: 4px;
 		padding: 8px 10px; cursor: pointer;
 	}
-	.path-card:hover { background: #161210; border-color: #3a342f; }
+	.path-card:hover { background: var(--surface-hover); border-color: var(--border-3); }
 
 	.path-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
 	.character {
 		font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase;
 		font-family: 'Outfit', sans-serif;
 	}
-	.meta { font-size: 0.7rem; color: #5c5650; font-family: 'JetBrains Mono', monospace; }
+	.meta { font-size: 0.7rem; color: var(--text-5); font-family: 'JetBrains Mono', monospace; }
 
 	.example { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
 	.chord-chip {
-		background: #1a1612; border: 1px solid #3a342f; color: #e8e2d5;
+		background: var(--surface-4); border: 1px solid var(--border-3); color: var(--text-1);
 		padding: 3px 8px; border-radius: 3px; cursor: pointer; font-size: 0.8rem;
 		font-family: 'Outfit', sans-serif;
 	}
-	.chord-chip:hover { background: #2a221a; }
-	.example-arr { color: #5c5650; font-size: 0.75rem; }
+	.chord-chip:hover { background: var(--surface-5); }
+	.example-arr { color: var(--text-5); font-size: 0.75rem; }
 </style>

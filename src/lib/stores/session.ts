@@ -55,3 +55,24 @@ export const targetDiatonicSet = derived(
 	modulationTarget,
 	($target) => $target ? diatonicChords($target.tonicPc, $target.modeName) : null,
 );
+
+function createThemeStore() {
+	const store = writable<'dark' | 'light'>('light');
+	return {
+		subscribe: store.subscribe,
+		init() {
+			if (typeof localStorage === 'undefined') return;
+			const saved = localStorage.getItem('hm-theme') as 'dark' | 'light' | null;
+			if (saved) store.set(saved);
+		},
+		toggle() {
+			store.update(t => {
+				const next = t === 'dark' ? 'light' : 'dark';
+				if (typeof localStorage !== 'undefined') localStorage.setItem('hm-theme', next);
+				if (typeof document !== 'undefined') document.documentElement.dataset.theme = next;
+				return next;
+			});
+		},
+	};
+}
+export const theme = createThemeStore();
