@@ -10,12 +10,12 @@ export interface ChordNode {
 	spoke: number;
 }
 
-export const VIEW = 720;
+export const VIEW = 800;
 export const CENTER = { x: VIEW / 2, y: VIEW / 2 };
 
-const R_MAJ = 230;
-const R_DOM = 160;
-const R_MIN = 295;
+export const R_MAJ = 258;
+export const R_DOM = 179;
+export const R_MIN = 330;
 
 export function buildCircleNodes(): ChordNode[] {
 	const nodes: ChordNode[] = [];
@@ -23,10 +23,10 @@ export function buildCircleNodes(): ChordNode[] {
 		const angle = (i / 12) * Math.PI * 2 - Math.PI / 2;
 		const cx = Math.cos(angle);
 		const sx = Math.sin(angle);
-		nodes.push({ pc, quality: 'M',  x: CENTER.x + cx * R_MAJ, y: CENTER.y + sx * R_MAJ, r: 26, spoke: i });
-		nodes.push({ pc, quality: '7',  x: CENTER.x + cx * R_DOM, y: CENTER.y + sx * R_DOM, r: 19, spoke: i });
+		nodes.push({ pc, quality: 'M',  x: CENTER.x + cx * R_MAJ, y: CENTER.y + sx * R_MAJ, r: 29, spoke: i });
+		nodes.push({ pc, quality: '7',  x: CENTER.x + cx * R_DOM, y: CENTER.y + sx * R_DOM, r: 21, spoke: i });
 		const minPc = (pc + 9) % 12;
-		nodes.push({ pc: minPc, quality: 'm', x: CENTER.x + cx * R_MIN, y: CENTER.y + sx * R_MIN, r: 22, spoke: i });
+		nodes.push({ pc: minPc, quality: 'm', x: CENTER.x + cx * R_MIN, y: CENTER.y + sx * R_MIN, r: 25, spoke: i });
 	});
 	return nodes;
 }

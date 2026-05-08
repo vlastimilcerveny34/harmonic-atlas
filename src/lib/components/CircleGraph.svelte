@@ -3,7 +3,7 @@
 	import { isDiatonic, getRoman, canonicalChordLabel } from '$lib/theory/chords.js';
 	import { outgoingRelationships } from '$lib/theory/relationships.js';
 	import { playChord } from '$lib/audio/synth.js';
-	import { buildCircleNodes, curvedPath, VIEW, CENTER, type ChordNode } from '$lib/layouts/circleOfFifths.js';
+	import { buildCircleNodes, curvedPath, VIEW, CENTER, R_DOM, R_MAJ, R_MIN, type ChordNode } from '$lib/layouts/circleOfFifths.js';
 	import { FIFTHS_PCS } from '$lib/theory/chords.js';
 
 	const QUALITY_COLOR: Record<string, string> = {
@@ -152,15 +152,15 @@
 
 		<circle cx={CENTER.x} cy={CENTER.y} r="200" fill="url(#centerGlow)" />
 
-		{#each [160, 230, 295] as r}
+		{#each [R_DOM, R_MAJ, R_MIN] as r}
 			<circle cx={CENTER.x} cy={CENTER.y} {r} fill="none" style="stroke: var(--border-2)" stroke-width="0.5" stroke-dasharray="2 6" />
 		{/each}
 
 		{#each FIFTHS_PCS as _, i}
 			{@const angle = (i / 12) * Math.PI * 2 - Math.PI / 2}
 			<line
-				x1={CENTER.x + Math.cos(angle) * 130} y1={CENTER.y + Math.sin(angle) * 130}
-				x2={CENTER.x + Math.cos(angle) * 320} y2={CENTER.y + Math.sin(angle) * 320}
+				x1={CENTER.x + Math.cos(angle) * 145} y1={CENTER.y + Math.sin(angle) * 145}
+				x2={CENTER.x + Math.cos(angle) * 358} y2={CENTER.y + Math.sin(angle) * 358}
 				style="stroke: var(--border-2)" stroke-width="0.5"
 			/>
 		{/each}
@@ -168,20 +168,20 @@
 		{#if tonicSpokeIdx >= 0}
 			{@const angle = (tonicSpokeIdx / 12) * Math.PI * 2 - Math.PI / 2}
 			<text
-				x={CENTER.x + Math.cos(angle) * 340}
-				y={CENTER.y + Math.sin(angle) * 340}
+				x={CENTER.x + Math.cos(angle) * 376}
+				y={CENTER.y + Math.sin(angle) * 376}
 				text-anchor="middle" dominant-baseline="middle"
-				style="font-family:'Crimson Pro',serif; font-size:13px; font-style:italic; fill: var(--accent);"
+				style="font-family:'Crimson Pro',serif; font-size:14px; font-style:italic; fill: var(--accent);"
 			>tonic</text>
 		{/if}
 
 		{#if targetTonicSpokeIdx >= 0}
 			{@const angle = (targetTonicSpokeIdx / 12) * Math.PI * 2 - Math.PI / 2}
 			<text
-				x={CENTER.x + Math.cos(angle) * 360}
-				y={CENTER.y + Math.sin(angle) * 360}
+				x={CENTER.x + Math.cos(angle) * 390}
+				y={CENTER.y + Math.sin(angle) * 390}
 				text-anchor="middle" dominant-baseline="middle" fill="#8eaf6e"
-				style="font-family:'Crimson Pro',serif; font-size:11px; font-style:italic;"
+				style="font-family:'Crimson Pro',serif; font-size:12px; font-style:italic;"
 			>→ target</text>
 		{/if}
 
@@ -296,7 +296,7 @@
 
 				<text x={node.x} y={node.y} text-anchor="middle" dominant-baseline="central"
 					fill={textColor}
-					style="font-family:'Outfit',sans-serif; font-weight:500; font-size:{node.r < 22 ? 11 : 13}px; pointer-events:none; user-select:none;"
+					style="font-family:'Outfit',sans-serif; font-weight:500; font-size:{node.r < 24 ? 12 : 14}px; pointer-events:none; user-select:none;"
 				>{canonicalChordLabel(node.pc, node.quality)}</text>
 
 				{#if isFocus && roman}
@@ -316,7 +316,7 @@
 </div>
 
 <style>
-	.graph-wrap { position: relative; width: 100%; max-width: 720px; cursor: default; }
+	.graph-wrap { position: relative; width: 100%; max-width: 800px; cursor: default; }
 	.clear-path-btn {
 		position: absolute; top: 10px; right: 10px; z-index: 10;
 		background: var(--badge-bg); border: 1px solid var(--accent); color: var(--accent);
