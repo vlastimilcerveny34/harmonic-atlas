@@ -100,7 +100,7 @@
 		margin-bottom: 4px; padding-bottom: 0;
 	}
 	.header-top { display: flex; align-items: center; justify-content: space-between; }
-	.logo { height: 180px; width: auto; display: block; margin-left: -30px; margin-bottom: -47px; }
+	.logo { height: 180px; width: auto; display: block; margin-left: 3px; margin-bottom: -8px; }
 	:global([data-theme="dark"]) .logo { filter: brightness(0) invert(1); }
 	.version {
 		font-size: 0.75rem; color: var(--text-3);
@@ -149,7 +149,7 @@
 	}
 
 	@media (max-width: 600px) {
-		.logo { height: 70px; margin-left: -20px; margin-bottom: -20px; }
+		.logo { height: 70px; margin-left: 3px; margin-bottom: -4px; }
 		.controls { gap: 10px; flex-wrap: wrap; }
 		.content { padding: 0 8px 96px; }
 		.graph-col { margin: 0 -8px; }
