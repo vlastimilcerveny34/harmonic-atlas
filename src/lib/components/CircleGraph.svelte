@@ -317,6 +317,7 @@
 
 <style>
 	.graph-wrap { position: relative; width: 100%; max-width: 800px; cursor: default; }
+	@media (max-width: 900px) { .graph-wrap { max-width: 100%; } }
 	.clear-path-btn {
 		position: absolute; top: 10px; right: 10px; z-index: 10;
 		background: var(--badge-bg); border: 1px solid var(--accent); color: var(--accent);

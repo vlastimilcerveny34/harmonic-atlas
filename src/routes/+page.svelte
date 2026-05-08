@@ -146,6 +146,11 @@
 
 	@media (max-width: 900px) {
 		.main-grid { grid-template-columns: 1fr; }
-		.header { flex-direction: column; gap: 16px; align-items: flex-start; }
+	}
+
+	@media (max-width: 600px) {
+		.logo { height: 70px; margin-left: -12px; margin-bottom: -20px; }
+		.controls { gap: 10px; flex-wrap: wrap; }
+		.content { padding: 0 12px 96px; }
 	}
 </style>
